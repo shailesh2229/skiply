@@ -1,85 +1,58 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Profile from "./pages/Profile";
-import BusinessDetails from "./pages/BusinessDetails";
-import BusinessPanel from "./features/business-panel/pages/BusinessPanel";
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
-import Loader from "./components/Common/Loader";
-import "./App.css";
+import React, { Suspense, lazy, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
+import Navbar from './ui/Navbar';
+import Footer from './ui/Footer';
+import Intro from './ui/Intro';
+import Home from './views/Home';
+import './styles/base.css';
+import './styles/components.css';
+import './styles/pages.css';
 
-// Component to handle conditional navbar/footer rendering
-function AppContent() {
-  const location = useLocation();
-  
-  // Search state for navbar
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchLocation, setSearchLocation] = useState('');
-  const [onSearch, setOnSearch] = useState(null);
+const Explore = lazy(() => import('./views/Explore'));
+const Place = lazy(() => import('./views/Place'));
+const Tickets = lazy(() => import('./views/Tickets'));
+const About = lazy(() => import('./views/About'));
+const Contact = lazy(() => import('./views/Contact'));
+const Profile = lazy(() => import('./views/Profile'));
+const NotFound = lazy(() => import('./views/NotFound'));
+const BusinessPanel = lazy(() => import('./features/business-panel/pages/BusinessPanel'));
 
-  // Check if current route is Business Panel (including nested routes)
-  const isBusinessPanel = location.pathname.startsWith('/business-panel');
+function Shell() {
+  const { pathname } = useLocation();
+  const panel = pathname.startsWith('/business-panel');
+  useEffect(() => { if (!pathname.startsWith('/place')) window.scrollTo(0, 0); }, [pathname]);
+  useEffect(() => { document.body.classList.toggle('in-panel', panel); }, [panel]);
 
   return (
     <>
-      {!isBusinessPanel && (
-        <Navbar 
-          onSearch={onSearch}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          location={searchLocation}
-          setLocation={setSearchLocation}
-        />
-      )}
-      <Routes>
-        <Route 
-          path="/" 
-          element={
-            <Home 
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              location={searchLocation}
-              setLocation={setSearchLocation}
-              setOnSearch={setOnSearch}
-            />
-          } 
-        />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/business/:id" element={<BusinessDetails />} />
-        <Route path="/business-panel/*" element={<BusinessPanel />} />
-        {/* TODO: Add more routes */}
-        {/* <Route path="/search" element={<BusinessSearch />} /> */}
-      </Routes>
-      {!isBusinessPanel && <Footer />}
+      {!panel && <Intro />}
+      {!panel && <Navbar />}
+      {!panel && pathname !== '/' && <div className="nav-spacer" />}
+      <Suspense fallback={<div className="route-loading mono">ARRIVING…</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/place/:pid" element={<Place />} />
+          <Route path="/tickets" element={<Tickets />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/business-panel/*" element={<BusinessPanel />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+      {!panel && <Footer />}
     </>
   );
 }
 
-function App() {
-  const [loading, setLoading] = useState(true);
-
-  // Simulate initial load (you can replace with real data check later)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // Reduced loading time
-    return () => clearTimeout(timer);
-  }, []);
-
+export default function App() {
   return (
-    <Router>
-      {loading ? (
-        <Loader />
-      ) : (
-        <AppContent />
-      )}
-    </Router>
+    <AppProvider>
+      <Router>
+        <Shell />
+      </Router>
+    </AppProvider>
   );
 }
-
-export default App;
