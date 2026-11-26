@@ -15,7 +15,7 @@
 .bp-time-btn {
   padding: 10px 20px;
   border: 2px solid var(--color-border);
-  background: white;
+  background: var(--d-tile);
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -42,10 +42,10 @@
 }
 
 .bp-analytics-card {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-analytics-card h3 {
@@ -68,11 +68,11 @@
 }
 
 .bp-metric-trend.positive {
-  color: #10b981;
+  color: var(--d-go);
 }
 
 .bp-metric-trend.negative {
-  color: #ef4444;
+  color: var(--d-hot);
 }
 
 /* Charts Section */
@@ -84,10 +84,10 @@
 }
 
 .bp-chart-card {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-chart-card h3 {
@@ -174,7 +174,7 @@
 
 .bp-dept-perf-bar {
   height: 10px;
-  background: #f3f4f6;
+  background: var(--d-hover);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -199,10 +199,10 @@
 }
 
 .bp-insight-card {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-insight-card h3 {
@@ -223,7 +223,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
 }
 
@@ -239,8 +239,8 @@
 .bp-insight-tip {
   margin-top: 15px;
   padding: 12px;
-  background: rgba(59, 130, 246, 0.05);
-  border-left: 3px solid #3b82f6;
+  background: var(--d-info-bg);
+  border-left: 3px solid var(--d-info);
   color: var(--color-text);
   font-size: 0.9rem;
 }
@@ -256,7 +256,7 @@
 
 .bp-insights-list li {
   padding: 10px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
   color: var(--color-text);
   font-size: 0.95rem;
@@ -273,7 +273,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
 }
 

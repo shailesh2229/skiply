@@ -1,0 +1,168 @@
+/* ==========================================================================
+   FLAT — the final say. Station-board honesty: solid colours, 1px rules,
+   no glows, no glass, no gradient text. Loaded last.
+   ========================================================================== */
+
+/* ---------- type ---------- */
+body { font-feature-settings: 'ss02', 'tnum' 0; }
+:root .display, :root .h1, :root .h2, :root .h3 { font-family: var(--f-display); font-weight: 600; letter-spacing: -.045em; font-variation-settings: normal; }
+:root .h3 { letter-spacing: -.025em; }
+:root .h1 em, :root .h2 em, :root .display em, :root .h3 em { font-style: normal; color: var(--ink-3); text-decoration: none; }
+:root .kicker { color: var(--ink-3); letter-spacing: .08em; }
+
+/* ---------- buttons ---------- */
+:root .btn { border-radius: 6px; font-weight: 600; letter-spacing: 0; }
+:root .btn-ink { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+:root .btn-ink::after { display: none; }
+:root .btn-ink:hover { background: var(--sign); border-color: var(--sign); color: var(--on-sign); box-shadow: none; }
+:root .btn-line:hover { background: var(--ink); color: var(--paper); }
+:root .chip { border-radius: 6px; }
+:root .chip[aria-pressed="true"], :root .chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: none; }
+:root .badge { background: var(--sign); color: var(--on-sign); animation: none; }
+:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
+::selection { background: var(--sign); color: var(--on-sign); }
+
+/* ---------- nav: solid bar, yellow call-to-action ---------- */
+:root .nav-glow { display: none; }
+:root .nav-pill { border-radius: 10px; background: var(--card); box-shadow: 0 1px 0 var(--rule), 0 10px 24px -18px rgba(0,0,0,.45); }
+:root[data-theme="dark"] .nav-pill, body.nav-dark .nav-pill { background: #161614; border-color: #2F2D28; box-shadow: 0 10px 24px -18px rgba(0,0,0,.8); }
+body.nav-dark .nav { --nav-fg: #EFE9DA; --nav-fg2: rgba(239,233,218,.66); --nav-line: #2F2D28; }
+:root .nav-links a, :root .nav-slide, :root .nav-station, :root .nav-search, :root .nav-icon, :root .snav-more-btn { border-radius: 6px; }
+:root .nav-slide { background: color-mix(in srgb, var(--ink) 7%, transparent); box-shadow: none; }
+:root[data-theme="dark"] .nav-slide, body.nav-dark .nav-slide { background: rgba(239,233,218,.08); }
+:root .nav-biz { border-radius: 6px; background: var(--sign); color: var(--on-sign); box-shadow: none; }
+:root .nav-biz::after { display: none; }
+:root .nav-biz:hover { background: var(--ink); color: var(--paper); box-shadow: none; transform: none; }
+body.nav-dark .nav-biz:hover, :root[data-theme="dark"] .nav-biz:hover { background: #EFE9DA; color: #141412; }
+:root .nav-drawer, :root .nav.is-open .nav-drawer { border-radius: 10px; background: var(--card); }
+:root .nav-drawer-biz { border-radius: 6px !important; background: var(--sign) !important; color: var(--on-sign) !important; }
+:root .nav-station-dot { box-shadow: none; }
+:root .snav-menu, :root .lv-pop { border-radius: 10px; box-shadow: 0 18px 40px -24px rgba(0,0,0,.5); }
+:root .snav .snav-menu a.snav-item { border-radius: 6px; }
+:root .snav .snav-menu a.snav-item:hover, :root .snav .snav-menu a.snav-item.active { background: color-mix(in srgb, var(--ink) 6%, transparent); box-shadow: inset 3px 0 0 var(--sign); }
+:root .snav-count, :root .nav-saved-n { background: var(--sign); color: var(--on-sign); }
+:root .brandmark-ring { animation: none; }
+
+/* ---------- scroll rail, cursor ---------- */
+:root .rail-progress span { background: var(--sign); box-shadow: none; }
+
+/* ---------- route: plain fade ---------- */
+:root .route { animation-name: route-fade; }
+@keyframes route-fade { from { opacity: 0; } to { opacity: 1; } }
+:root .rl-track i { background: var(--sign); }
+
+/* ---------- toasts: printed slips ---------- */
+:root .toast { border-radius: 8px; background: var(--card); border: 1px solid var(--rule); box-shadow: 0 14px 30px -20px rgba(0,0,0,.5); }
+:root .toast-ico { border-radius: 6px; }
+:root .toast-life { background: var(--sign); }
+:root .tone-pa { background: #141412; color: #F4ECD6; border-color: #2F2D28; }
+:root .tone-pa .toast-ico { background: var(--sign); color: #141412; animation: none; }
+:root .tone-pa .toast-pa { background: var(--sign); color: #141412; border-bottom: 0; font-weight: 600; }
+:root .toast-pa-led { background: #141412; box-shadow: none; }
+:root .toast-pa-eq i { background: #141412; }
+:root .tone-pa .toast-act { color: var(--sign); }
+
+/* ---------- settings popover ---------- */
+:root .lv-card, :root .vp, :root .vp-studio, :root .vp-seg, :root .vp-seg button, :root .lv-tg, :root .vp-sel { border-radius: 6px; }
+:root .lv-dot { box-shadow: 0 0 0 2px var(--nav-line, var(--rule)); }
+:root .vp-seg button.is-on { background: var(--ink); color: var(--paper); box-shadow: none; }
+:root .lv-tg[aria-checked="true"] .lv-tg-k, :root .vp-sw[aria-checked="true"] { background: var(--signal-go); }
+:root .vp-studio.is-on { box-shadow: none; }
+
+/* ---------- cards & surfaces across pages ---------- */
+:root .sv, :root .cc, :root .pp-stat, :root .bdg, :root .saved-cta, :root .pp-level, :root .pp-privacy { border-radius: 10px; }
+:root .sv::after, :root .cc::before { display: none; }
+:root .sv:hover, :root .cc:hover { box-shadow: 0 14px 30px -22px rgba(0,0,0,.45); }
+:root .pp-stat .display { color: var(--ink); }
+:root .pp-bar i { background: var(--sign); }
+:root .bdg.is-on { border-color: var(--ink); box-shadow: none; }
+:root .bdg-ico { border-radius: 6px; background: var(--sign); color: var(--on-sign); font-family: var(--f-mono); font-weight: 600; font-size: .9rem; }
+:root .bdg:not(.is-on) .bdg-ico { background: color-mix(in srgb, var(--ink) 8%, transparent); color: var(--ink-3); }
+:root .saved-heart { color: var(--signal-stop); filter: none; }
+:root .sv-x { color: var(--signal-stop); }
+
+/* passenger card: a printed railway pass, not a holographic credit card */
+:root .pc-face { border-radius: 12px; color: #F4ECD6; background: #141412; box-shadow: 0 24px 50px -30px rgba(0,0,0,.6); }
+:root .pc-face::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: var(--sign); }
+:root .pc-back { background: #1B1A17; }
+:root .pc-holo { display: none; }
+:root .pc-tier { color: #141412; background: var(--sign); border-color: var(--sign); border-radius: 4px; }
+:root .pc-chip { background: #C9A227; border-radius: 4px; }
+:root .stamp.is-on { filter: none; }
+
+/* pulse / compare */
+:root .pz-hero::before { display: none; }
+:root .cmp-pick { background: var(--card) !important; box-shadow: inset 4px 0 0 var(--sign); }
+:root .cmp-pick::after { display: none; }
+
+/* tickets */
+:root .ticket { border-radius: 6px; }
+:root .tkx-shine, :root .tk-alert::after { display: none; }
+:root .er-line::before { background: var(--ink); opacity: .8; }
+
+/* compare tray + live dock: solid bars */
+:root .ctray, :root .ldock, :root .live-dock, :root .cmp-tray { background: var(--card) !important; border-radius: 10px !important; box-shadow: 0 14px 30px -20px rgba(0,0,0,.5) !important; }
+
+/* express train easter egg: flat livery */
+:root .fx-loco { background: var(--sign); color: #141412; }
+:root .fx-car { background: #141412; color: var(--sign); border-bottom-color: #2F2D28; }
+:root .fx-lamp { box-shadow: 0 0 0 3px rgba(255,255,220,.6); }
+
+/* the custom cursor is retired */
+:root .cur-dot, :root .cur-ring { display: none !important; }
+
+/* confetti in station colours only */
+:root .fx-burst i { color: var(--sign); text-shadow: none; }
+:root .fx-burst i:nth-child(3n) { color: var(--ink); }
+:root .fx-burst i:nth-child(3n+1) { color: var(--signal-go); }
+:root .lv-grid { grid-template-columns: 1fr 1fr; }
+:root .watch-bell svg { display: inline-block; vertical-align: -2px; }
+
+/* ---------- premium monochrome details ---------- */
+:root .brand-word { font-family: var(--f-brand); font-weight: 700; letter-spacing: -.02em; }
+:root .btn, :root .chip, :root .nav-pill, :root .nav-biz { border-radius: 999px; }
+:root .btn-ink:hover, :root .nav-biz:hover { background: var(--ink-2); border-color: var(--ink-2); color: var(--paper); }
+
+/* venue cards: photo thumbnail instead of a platform number */
+:root .pcard { border-radius: 14px; }
+:root .pcard:hover, :root .pcard.is-active { transform: translateY(-2px); border-color: var(--ink-3); box-shadow: 0 10px 24px -18px rgba(0,0,0,.35); }
+:root .pcard-photo { position: relative; padding: 10px; border-right: 0; align-content: stretch; }
+:root .pcard-photo::before, :root .pcard-photo::after { display: none; }
+:root .pcard-photo img { width: 100%; height: 100%; min-height: 72px; object-fit: cover; border-radius: 10px; background: var(--paper-2); }
+:root .pcard-ico { position: absolute; left: 16px; bottom: 16px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--card); box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+
+/* venue page: real photo instead of a platform sign */
+:root .place-head { grid-template-columns: minmax(220px, 320px) 1fr; align-items: end; }
+:root .place-photo { position: relative; aspect-ratio: 4 / 3; border-radius: 20px; overflow: hidden; background: var(--paper-2); }
+:root .place-photo img { width: 100%; height: 100%; object-fit: cover; }
+:root .place-photo-tag { position: absolute; left: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px;
+  background: rgba(255,255,255,.94); color: #0A0A0A; font-size: .78rem; font-weight: 600; }
+@media (max-width: 560px) { :root .place-head { grid-template-columns: 1fr; } :root .place-photo { aspect-ratio: 16 / 9; } }
+
+/* logo: ink disc, paper S — flips on dark surfaces */
+:root .brandmark .bm-bg { fill: var(--ink); }
+:root .brandmark .bm-s { stroke: var(--paper); }
+body.nav-dark .nav .brandmark .bm-bg, :root .pfoot .brandmark .bm-bg, :root .console-dark .brandmark .bm-bg { fill: #FAFAFA; }
+body.nav-dark .nav .brandmark .bm-s, :root .pfoot .brandmark .bm-s, :root .console-dark .brandmark .bm-s { stroke: #0A0A0A; }
+
+/* map pins keep their venue-type colour */
+:root .pin-hospital { background: #C8402E; } :root .pin-clinic { background: #2D6CB0; } :root .pin-bank { background: #23885A; }
+:root .pin-salon { background: #B8467E; } :root .pin-restaurant { background: #D98A12; } :root .pin-pharmacy { background: #17877E; }
+:root .pin-post_office { background: #6D5BA3; }
+:root .pin { color: #fff; border-color: #fff; }
+:root .pin.is-active, :root .pin:hover { background: #0A0A0A; }
+
+/* ---------- venue photos: real when available, representative otherwise ---------- */
+.vphoto { position: relative; display: block; overflow: hidden; background: var(--paper-2); }
+.vphoto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vphoto-real { opacity: 0; transition: opacity .6s ease; }
+.vphoto-real.is-in { opacity: 1; }
+.vphoto-real-dot { position: absolute; right: 6px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--signal-go); box-shadow: 0 0 0 2px #fff; }
+.vphoto-credit { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2; width: fit-content; max-width: calc(100% - 20px); padding: 5px 9px; border-radius: 8px;
+  background: rgba(10,10,10,.72); color: #FAFAFA; font-size: .7rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vphoto-credit.is-generic { background: rgba(255,255,255,.92); color: #3F3F3F; }
+:root .pcard-photo .vphoto { width: 100%; height: 100%; min-height: 72px; border-radius: 10px; }
+:root .place-photo .vphoto { position: absolute; inset: 0; }
+.ph-thumb .vphoto { position: absolute; inset: 0; }
+.ph-thumb { position: relative; }
+:root .place-photo-tag { top: 12px; bottom: auto; z-index: 3; }

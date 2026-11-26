@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Profile.css';
 
@@ -113,7 +114,7 @@ const BusinessProfile = () => {
         subtitle="Manage your business information and settings"
         actions={
           <Button variant="primary" onClick={handleSave}>
-            💾 Save Changes
+            <Glyph e="💾" /> Save Changes
           </Button>
         }
       />
@@ -124,25 +125,25 @@ const BusinessProfile = () => {
           className={`bp-tab ${activeTab === 'info' ? 'active' : ''}`}
           onClick={() => setActiveTab('info')}
         >
-          📋 Basic Info
+          <Glyph e="📋" /> Basic Info
         </button>
         <button 
           className={`bp-tab ${activeTab === 'hours' ? 'active' : ''}`}
           onClick={() => setActiveTab('hours')}
         >
-          🕐 Business Hours
+          <Glyph e="🕐" /> Business Hours
         </button>
         <button 
           className={`bp-tab ${activeTab === 'branches' ? 'active' : ''}`}
           onClick={() => setActiveTab('branches')}
         >
-          🏢 Branches
+          <Glyph e="🏢" /> Branches
         </button>
         <button 
           className={`bp-tab ${activeTab === 'media' ? 'active' : ''}`}
           onClick={() => setActiveTab('media')}
         >
-          🖼️ Images
+          <Glyph e="🖼️" /> Images
         </button>
       </div>
 
@@ -323,7 +324,7 @@ const BusinessProfile = () => {
           <div className="bp-branches-header">
             <h3>Branch Locations</h3>
             <Button variant="primary" onClick={() => setShowAddBranch(true)}>
-              ➕ Add Branch
+              <Glyph e="➕" /> Add Branch
             </Button>
           </div>
 
@@ -332,16 +333,16 @@ const BusinessProfile = () => {
               <div key={branch.id} className="bp-branch-card">
                 {branch.isMain && <span className="bp-main-badge">Main Branch</span>}
                 <h4>{branch.name}</h4>
-                <p>📍 {branch.address || 'Address not set'}</p>
-                <p>📞 {branch.phone || 'Phone not set'}</p>
+                <p><Glyph e="📍" /> {branch.address || 'Address not set'}</p>
+                <p><Glyph e="📞" /> {branch.phone || 'Phone not set'}</p>
                 <div className="bp-branch-actions">
-                  <button className="bp-branch-btn edit">✏️ Edit</button>
+                  <button className="bp-branch-btn edit"><Glyph e="✏️" /> Edit</button>
                   {!branch.isMain && (
                     <button 
                       className="bp-branch-btn delete"
                       onClick={() => handleDeleteBranch(branch.id)}
                     >
-                      🗑️ Delete
+                      <Glyph e="🗑️" /> Delete
                     </button>
                   )}
                 </div>
@@ -391,7 +392,7 @@ const BusinessProfile = () => {
                 <label className="bp-upload-label">Business Logo</label>
                 <div className="bp-upload-area">
                   <div className="bp-upload-preview">
-                    <span className="bp-upload-icon">🏪</span>
+                    <span className="bp-upload-icon"><Glyph e="🏪" /></span>
                     <p>Upload Logo</p>
                   </div>
                   <input 
@@ -402,7 +403,7 @@ const BusinessProfile = () => {
                     id="logo-upload"
                   />
                   <label htmlFor="logo-upload" className="bp-upload-btn">
-                    📁 Choose File
+                    <Glyph e="📁" /> Choose File
                   </label>
                 </div>
                 <p className="bp-upload-hint">Recommended: Square image, min 200x200px</p>
@@ -412,7 +413,7 @@ const BusinessProfile = () => {
                 <label className="bp-upload-label">Cover Image</label>
                 <div className="bp-upload-area wide">
                   <div className="bp-upload-preview">
-                    <span className="bp-upload-icon">🖼️</span>
+                    <span className="bp-upload-icon"><Glyph e="🖼️" /></span>
                     <p>Upload Cover Image</p>
                   </div>
                   <input 
@@ -423,7 +424,7 @@ const BusinessProfile = () => {
                     id="cover-upload"
                   />
                   <label htmlFor="cover-upload" className="bp-upload-btn">
-                    📁 Choose File
+                    <Glyph e="📁" /> Choose File
                   </label>
                 </div>
                 <p className="bp-upload-hint">Recommended: 1200x400px, max 2MB</p>

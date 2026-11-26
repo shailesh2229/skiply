@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Schedule.css';
 
@@ -79,7 +80,7 @@ const ScheduleAvailability = () => {
         subtitle="Manage business hours, holidays, and booking slots"
         actions={
           <Button variant="primary" onClick={handleSave}>
-            💾 Save Schedule
+            <Glyph e="💾" /> Save Schedule
           </Button>
         }
       />
@@ -102,14 +103,14 @@ const ScheduleAvailability = () => {
         </div>
         {!bookingEnabled && (
           <div className="bp-booking-disabled-alert">
-            ⚠️ Online booking is currently disabled. Customers cannot make new bookings.
+            <Glyph e="⚠️" /> Online booking is currently disabled. Customers cannot make new bookings.
           </div>
         )}
       </div>
 
       {/* Business Hours */}
       <div className="bp-schedule-section">
-        <h3>📅 Weekly Business Hours</h3>
+        <h3><Glyph e="📅" /> Weekly Business Hours</h3>
         <div className="bp-hours-list">
           {Object.keys(businessHours).map(day => (
             <div key={day} className={`bp-hours-row ${!businessHours[day].isOpen ? 'closed' : ''}`}>
@@ -149,9 +150,9 @@ const ScheduleAvailability = () => {
       {/* Holidays & Breaks */}
       <div className="bp-schedule-section">
         <div className="bp-section-header">
-          <h3>🗓️ Holidays & Breaks</h3>
+          <h3><Glyph e="🗓️" /> Holidays & Breaks</h3>
           <Button variant="secondary" onClick={() => setShowAddHoliday(true)}>
-            ➕ Add Holiday/Break
+            <Glyph e="➕" /> Add Holiday/Break
           </Button>
         </div>
 
@@ -159,23 +160,23 @@ const ScheduleAvailability = () => {
           {holidays.map(holiday => (
             <div key={holiday.id} className={`bp-holiday-item ${holiday.type}`}>
               <div className="bp-holiday-icon">
-                {holiday.type === 'holiday' ? '🏖️' : '☕'}
+                <Glyph e={holiday.type === 'holiday' ? '🏖️' : '☕'} size={22} />
               </div>
               <div className="bp-holiday-details">
                 <h4>{holiday.name}</h4>
                 {holiday.type === 'holiday' ? (
-                  <p>📅 {new Date(holiday.date).toLocaleDateString('en-US', { 
+                  <p><Glyph e="📅" /> {new Date(holiday.date).toLocaleDateString('en-US', { 
                     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
                   })}</p>
                 ) : (
-                  <p>⏰ {holiday.startTime} - {holiday.endTime} {holiday.recurring && '(Daily)'}</p>
+                  <p><Glyph e="⏰" /> {holiday.startTime} - {holiday.endTime} {holiday.recurring && '(Daily)'}</p>
                 )}
               </div>
               <button 
                 className="bp-holiday-delete"
                 onClick={() => deleteHoliday(holiday.id)}
               >
-                🗑️
+                <Glyph e="🗑️" />
               </button>
             </div>
           ))}
@@ -191,8 +192,8 @@ const ScheduleAvailability = () => {
       {/* Time Slots */}
       <div className="bp-schedule-section">
         <div className="bp-section-header">
-          <h3>⏰ Booking Time Slots</h3>
-          <Button variant="secondary">⚙️ Configure Slots</Button>
+          <h3><Glyph e="⏰" /> Booking Time Slots</h3>
+          <Button variant="secondary"><Glyph e="⚙️" /> Configure Slots</Button>
         </div>
 
         <div className="bp-slots-grid">
@@ -215,7 +216,7 @@ const ScheduleAvailability = () => {
                   />
                 </div>
                 <div className="bp-slot-status">
-                  {status === 'full' ? '🔴 Full' : status === 'filling' ? '🟡 Filling Fast' : '🟢 Available'}
+                  {status === 'full' ? <><Glyph e="🔴" /> Full</> : status === 'filling' ? <><Glyph e="🟡" /> Filling Fast</> : <><Glyph e="🟢" /> Available</>}
                 </div>
               </div>
             );

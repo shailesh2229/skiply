@@ -8,7 +8,7 @@ export function createTicket({ place, department, mode, slot, estimate, passenge
   const now = Date.now();
   const seq = 1 + Math.floor(hash01(place.id + now) * 98) + (estimate?.people || 0);
   return {
-    id: `T${now.toString(36).toUpperCase()}`,
+    id: `T${now.toString(36).toUpperCase()}${Math.floor(Math.random() * 1296).toString(36).toUpperCase().padStart(2, '0')}`,
     token: `${cat.letter}-${String(seq).padStart(3, '0')}`,
     placeId: place.id, placeName: place.name, category: place.category,
     address: place.address || '', lat: place.lat, lng: place.lng,

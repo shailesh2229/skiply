@@ -13,10 +13,12 @@ const expo = (mean) => -Math.log(1 - Math.random()) * mean;
  * exponentially distributed service times around the category average.
  * Tokens booked in the Skiply app on this device for this venue join the line as real entries.
  */
-export default function useQueueSim(venue, appTickets) {
-  const cat = CATEGORIES[venue.category];
+export default function useQueueSim(venue, appTickets, setup = {}) {
+  const cat0 = CATEGORIES[venue.category];
+  const svc = setup.service || cat0.service;
+  const cat = useMemo(() => ({ ...cat0, service: svc }), [cat0, svc]);
   const est0 = useMemo(() => estimateAt(venue, new Date()), [venue]);
-  const startCounters = Math.min(MAX_COUNTERS, Math.max(1, est0.counters));
+  const startCounters = Math.min(MAX_COUNTERS, Math.max(1, setup.counters || est0.counters));
   const seq = useRef(10 + Math.floor(hash01(venue.id) * 60));
   const nextToken = () => `${cat.letter}-${String(++seq.current % 1000).padStart(3, '0')}`;
   const dept = () => cat.departments[Math.floor(Math.random() ** 1.6 * cat.departments.length)];
@@ -30,9 +32,9 @@ export default function useQueueSim(venue, appTickets) {
     // people already served today, from the model's curve up to now
     const h = new Date().getHours();
     const servedToday = Math.round(cat.curve.slice(0, h).reduce((a, b) => a + b, 0) * (startCounters * 60 / cat.service) * 0.85);
-    return { simNow: now, queue, counters, served: servedToday, waits: [], log: [], calls: 0 };
+    return { simNow: now, queue, counters, served: servedToday, waits: [], log: [], calls: 0, done: [] };
   });
-  const [speed, setSpeed] = useState(10);
+  const [speed, setSpeed] = useState(setup.speed || 1);
   const [auto, setAuto] = useState(true);
   const [paused, setPaused] = useState(false);
   const seenApp = useRef(new Set());
@@ -76,11 +78,12 @@ export default function useQueueSim(venue, appTickets) {
       }
       // service completions
       let served = s.served;
+      const finished = [];
       const counters = s.counters.map((c) => {
-        if (c.serving && s.simNow - c.start >= c.dur) { served += 1; return { ...c, serving: null }; }
+        if (c.serving && s.simNow - c.start >= c.dur) { served += 1; finished.push({ ...c.serving, outcome: 'done', at: s.simNow, counter: c.id }); return { ...c, serving: null }; }
         return c;
       });
-      s = { ...s, counters, served };
+      s = { ...s, counters, served, done: [...finished, ...s.done].slice(0, 30) };
       if (auto && open) for (let i = 0; i < counters.length; i++) s = assign(s);
       return s;
     }), 1000);
@@ -102,9 +105,29 @@ export default function useQueueSim(venue, appTickets) {
     let st = s;
     const target = id ? st.counters.find((c) => c.id === id) : st.counters.find((c) => c.on && !c.serving) || st.counters.find((c) => c.on);
     if (!target) return st;
-    if (target.serving) st = { ...st, served: st.served + 1, counters: st.counters.map((c) => (c.id === target.id ? { ...c, serving: null } : c)) };
+    if (target.serving) st = { ...st, served: st.served + 1, done: [{ ...target.serving, outcome: 'done', at: st.simNow, counter: target.id }, ...st.done].slice(0, 30), counters: st.counters.map((c) => (c.id === target.id ? { ...c, serving: null } : c)) };
     return assign(st, target.id, true);
   }), []); // eslint-disable-line react-hooks/exhaustive-deps
+  // finish whoever is at a counter (customer served)
+  const finish = useCallback((id) => setState((s) => {
+    const c = s.counters.find((x) => x.id === id);
+    if (!c?.serving) return s;
+    return log({ ...s, served: s.served + 1, done: [{ ...c.serving, outcome: 'done', at: s.simNow, counter: id }, ...s.done].slice(0, 30),
+      counters: s.counters.map((x) => (x.id === id ? { ...x, serving: null } : x)) }, `${c.serving.token} served at Counter ${id}`, 'sys');
+  }), []); // eslint-disable-line react-hooks/exhaustive-deps
+  // customer didn't turn up: drop them from the line (or from a counter)
+  const noShow = useCallback((token) => setState((s) => {
+    const p = s.queue.find((x) => x.token === token) || s.counters.find((c) => c.serving?.token === token)?.serving;
+    if (!p) return s;
+    return log({ ...s, queue: s.queue.filter((x) => x.token !== token), done: [{ ...p, outcome: 'noshow', at: s.simNow }, ...s.done].slice(0, 30),
+      counters: s.counters.map((c) => (c.serving?.token === token ? { ...c, serving: null } : c)) }, `${token} marked as no-show`, 'sys');
+  }), []); // eslint-disable-line react-hooks/exhaustive-deps
+  const moveUp = useCallback((token) => setState((s) => {
+    const i = s.queue.findIndex((x) => x.token === token);
+    if (i <= 0) return s;
+    const q = [...s.queue]; [q[i - 1], q[i]] = [q[i], q[i - 1]];
+    return { ...s, queue: q };
+  }), []);
   const addWalkIn = useCallback(() => setState((s) => { const p = make(s.simNow); return log({ ...s, queue: [...s.queue, p] }, `${p.token} added at the desk`, 'join'); }), []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -118,6 +141,6 @@ export default function useQueueSim(venue, appTickets) {
   return {
     ...state, cat, open, waitNow, avgWait, max: MAX_COUNTERS,
     speed, setSpeed, auto, setAuto, paused, setPaused,
-    setOpenCount, toggle, callNext, addWalkIn, onCall,
+    setOpenCount, toggle, callNext, addWalkIn, onCall, finish, noShow, moveUp,
   };
 }

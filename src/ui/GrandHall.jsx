@@ -11,8 +11,8 @@ function Arch() {
     <svg className="gh-arch" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <defs>
         <radialGradient id="ghGlow" cx="50%" cy="60%" r="55%">
-          <stop offset="0" stopColor="#8B5CF6" stopOpacity=".45" />
-          <stop offset=".5" stopColor="#6D28D9" stopOpacity=".12" />
+          <stop offset="0" stopColor="#E8A33D" stopOpacity=".22" />
+          <stop offset=".5" stopColor="#7A5420" stopOpacity=".08" />
           <stop offset="1" stopColor="#000" stopOpacity="0" />
         </radialGradient>
         <linearGradient id="ghFade" x1="0" y1="0" x2="0" y2="1">

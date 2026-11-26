@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Staff.css';
 
@@ -74,7 +75,7 @@ const StaffList = () => {
         subtitle="Manage your team members and their permissions"
         actions={
           <Button variant="primary" onClick={handleAddStaff}>
-            ➕ Add Staff Member
+            <Glyph e="➕" /> Add Staff Member
           </Button>
         }
       />
@@ -91,7 +92,7 @@ const StaffList = () => {
                 <p className="bp-staff-email">{member.email}</p>
                 <div className="bp-staff-meta">
                   <span className={`bp-role-badge ${roleBadge.class}`}>
-                    {roleBadge.icon} {roleBadge.label}
+                    <Glyph e={roleBadge.icon} size={14} /> {roleBadge.label}
                   </span>
                   <span className="bp-dept-tag">{member.department}</span>
                 </div>
@@ -103,30 +104,30 @@ const StaffList = () => {
                   <span className="label">Customers Served</span>
                 </div>
                 <div className="bp-staff-stat">
-                  <span className="value">⭐ {member.rating}</span>
+                  <span className="value"><Glyph e="⭐" /> {member.rating}</span>
                   <span className="label">Rating</span>
                 </div>
               </div>
 
               <div className="bp-staff-status">
                 <span className={`bp-status-indicator ${member.status}`}>
-                  {member.status === 'active' ? '🟢 Active' : '⚫ Inactive'}
+                  {member.status === 'active' ? <><Glyph e="🟢" /> Active</> : <><Glyph e="⚫" /> Inactive</>}
                 </span>
               </div>
 
               <div className="bp-staff-actions">
-                <button className="bp-staff-btn edit">✏️ Edit</button>
+                <button className="bp-staff-btn edit"><Glyph e="✏️" /> Edit</button>
                 <button 
                   className="bp-staff-btn toggle"
                   onClick={() => toggleStaffStatus(member.id)}
                 >
-                  {member.status === 'active' ? '⏸️ Disable' : '▶️ Enable'}
+                  {member.status === 'active' ? <><Glyph e="⏸️" /> Disable</> : <><Glyph e="▶️" /> Enable</>}
                 </button>
                 <button 
                   className="bp-staff-btn delete"
                   onClick={() => deleteStaff(member.id)}
                 >
-                  🗑️ Remove
+                  <Glyph e="🗑️" /> Remove
                 </button>
               </div>
             </div>

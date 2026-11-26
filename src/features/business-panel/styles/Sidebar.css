@@ -12,13 +12,13 @@
   left: 0;
   top: 0;
   z-index: 100;
-  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   overflow-y: auto;
 }
 
 .bp-sidebar-header {
   padding: 25px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--d-line);
 }
 
 .bp-logo {
@@ -46,14 +46,14 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--d-line);
 }
 
 .bp-user-avatar {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: white;
+  background: var(--d-tile);
   color: var(--color-secondary);
   display: flex;
   align-items: center;
@@ -108,11 +108,11 @@
 }
 
 .bp-nav-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--d-line);
 }
 
 .bp-nav-item.active {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--d-line);
   font-weight: 600;
 }
 
@@ -123,7 +123,7 @@
   top: 0;
   bottom: 0;
   width: 4px;
-  background: white;
+  background: var(--d-tile);
 }
 
 .bp-nav-icon {
@@ -138,7 +138,7 @@
 /* Footer */
 .bp-sidebar-footer {
   padding: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--d-line);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -147,7 +147,7 @@
 .bp-footer-btn {
   width: 100%;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--d-line);
   border: none;
   border-radius: 8px;
   color: white;
@@ -161,7 +161,7 @@
 }
 
 .bp-footer-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--d-line);
 }
 
 /* Responsive */

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Notifications.css';
 
@@ -81,7 +82,7 @@ const NotificationCenter = () => {
         subtitle={`${unreadCount} unread notification${unreadCount !== 1 ? 's' : ''}`}
         actions={
           <Button variant="secondary" onClick={markAllAsRead}>
-            ✓ Mark All as Read
+            <Glyph e="✓" /> Mark All as Read
           </Button>
         }
       />
@@ -106,7 +107,7 @@ const NotificationCenter = () => {
       <div className="bp-notif-list">
         {filteredNotifications.map(notif => (
           <div key={notif.id} className={`bp-notif-item ${notif.read ? 'read' : 'unread'}`}>
-            <div className="bp-notif-icon">{notif.icon}</div>
+            <div className="bp-notif-icon"><Glyph e={notif.icon} size={20} /></div>
             <div className="bp-notif-content">
               <h4>{notif.title}</h4>
               <p>{notif.message}</p>
@@ -115,11 +116,11 @@ const NotificationCenter = () => {
             <div className="bp-notif-actions">
               {!notif.read && (
                 <button className="bp-notif-btn" onClick={() => markAsRead(notif.id)}>
-                  ✓
+                  <Glyph e="✓" />
                 </button>
               )}
               <button className="bp-notif-btn delete" onClick={() => deleteNotification(notif.id)}>
-                🗑️
+                <Glyph e="🗑️" />
               </button>
             </div>
           </div>
@@ -127,7 +128,7 @@ const NotificationCenter = () => {
 
         {filteredNotifications.length === 0 && (
           <div className="bp-empty-state">
-            <p>🔔 No notifications</p>
+            <p><Glyph e="🔔" /> No notifications</p>
           </div>
         )}
       </div>

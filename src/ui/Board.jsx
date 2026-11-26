@@ -36,7 +36,7 @@ export default function Board({ places, loading, cityName, now }) {
   return (
     <div className="board" aria-label={`Live board for ${cityName}`}>
       <div className="board-head">
-        <span className="board-title"><span className="board-led" /> DEPARTURES FROM YOUR QUEUE</span>
+        <span className="board-title"><span className="board-led" /> LIVE WAITING TIMES NEAR YOU</span>
         <span className="board-meta mono">{cityName?.toUpperCase()} · <DigitalClock /></span>
       </div>
       <div className="board-cols mono">

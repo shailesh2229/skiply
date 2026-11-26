@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Console skin for the management pages (staff, analytics, reports …)
+   The page CSS in ../styles is tokenised; here we point those tokens at the
+   console palette and restyle shared primitives the Stripe/Linear way.
+   ========================================================================== */
+.console .legacy {
+  --color-primary: var(--d-fg); --color-secondary: var(--d-fg); --color-bg: transparent; --color-white: var(--d-panel);
+  --color-text: var(--d-fg); --color-muted: var(--d-fg2); --color-border: var(--d-line); --radius-md: 10px;
+  --font-primary: var(--f-body);
+  max-width: 1480px; margin: 0 auto; background: none; color: var(--d-fg); border-radius: 0; padding: 0; min-height: 0; overflow: visible; font-size: 14px;
+}
+.console .legacy > * { background: none !important; padding: 0 !important; min-height: 0 !important; }
+.console .legacy > * > * { animation: lg-rise .3s ease both; }
+@keyframes lg-rise { from { opacity: 0; transform: translateY(4px); } }
+
+/* ---------- header ---------- */
+.console .bp-header { align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; padding-bottom: 0; border-bottom: 0; }
+.console .bp-header-kicker { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-body); font-size: 13px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--d-fg3); margin-bottom: 6px; }
+.console .bp-header-led { width: 6px; height: 6px; border-radius: 50%; background: var(--d-go); }
+.console .bp-header-title { font-family: var(--f-body); font-size: 26px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: var(--d-fg); margin: 0 0 6px; }
+.console .bp-header-title span { font-style: normal; color: var(--d-fg2); font-weight: 500; }
+.console .bp-header-subtitle { color: var(--d-fg2); max-width: 60ch; font-size: 14px; }
+.console .bp-header-actions { flex-wrap: wrap; }
+
+/* ---------- surfaces: every card-ish block ---------- */
+.console .legacy [class*="-card"], .console .legacy [class*="bp-dashboard-card"], .console .legacy .bp-queue-table-container,
+.console .legacy .bp-report-table-section, .console .legacy [class$="-section"], .console .legacy [class*="-section "] {
+  background: var(--d-panel); border: 1px solid var(--d-line); border-radius: 10px; box-shadow: var(--d-shadow); transition: border-color .15s;
+}
+.console .legacy [class*="-card"]:hover { border-color: var(--d-line-2); transform: none; }
+.console .legacy [class*="-card"] [class*="-card"] { background: var(--d-raised); box-shadow: none; }
+.console .legacy h2, .console .legacy h3, .console .legacy h4 { font-family: var(--f-body); color: var(--d-fg); font-weight: 600; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+.console .legacy h3 { font-size: 15px; }
+.console .legacy h3 .gl, .console .legacy h2 .gl { color: var(--d-fg3); }
+.console .legacy p, .console .legacy li, .console .legacy td, .console .legacy label { color: inherit; }
+.console .legacy strong { color: var(--d-fg); }
+
+/* ---------- icons ---------- */
+.console .legacy .gl { display: inline-block; vertical-align: -3px; flex: none; }
+.console .legacy [class*="-icon"], .console .legacy .icon { color: var(--d-fg2); }
+.console .legacy [class*="stat-icon"], .console .legacy .metric-icon, .console .legacy .bp-notif-icon, .console .legacy .bp-upload-icon, .console .legacy .insight-icon {
+  display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 8px; font-size: 0;
+  background: var(--d-sunk); border: 0; color: var(--d-fg2);
+}
+.console .legacy [class*="stat-icon"] .gl, .console .legacy .metric-icon .gl, .console .legacy .insight-icon .gl { width: 18px; height: 18px; }
+.gl-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: 1px; }
+.gl-go { background: var(--d-go, #12805C); } .gl-warn { background: var(--d-warn, #B25E09); } .gl-hot { background: var(--d-hot, #C4320A); } .gl-off { background: var(--d-fg3, #8F8F8F); }
+.gl-stars { display: inline-flex; gap: 1px; vertical-align: -2px; color: var(--d-line-2, #E0E0E0); }
+.gl-stars .on { color: var(--d-fg, #0A0A0A); }
+.gl-stars .on svg { fill: currentColor; }
+
+/* ---------- buttons ---------- */
+.console .legacy .btn { min-height: 36px; padding: 0 14px; border: 1px solid transparent; border-radius: 8px; font-family: var(--f-body); font-size: 14px; font-weight: 500; letter-spacing: 0; gap: 6px; box-shadow: var(--d-shadow);
+  transition: background .15s, border-color .15s, color .15s, transform .1s; }
+.console .legacy .btn:active { transform: translateY(1px); }
+.console .legacy .btn-primary { background: var(--d-sign); color: var(--d-on-sign); border-color: var(--d-sign); }
+.console .legacy .btn-primary:hover:not(:disabled) { background: var(--d-sign-2); color: var(--d-on-sign); border-color: var(--d-sign-2); transform: none; box-shadow: var(--d-shadow); }
+.console .legacy .btn-secondary { background: var(--d-panel); color: var(--d-fg); border-color: var(--d-line-2); }
+.console .legacy .btn-secondary:hover:not(:disabled) { background: var(--d-hover); color: var(--d-fg); border-color: var(--d-line-2); }
+.console .legacy button:not(.btn) { font-family: inherit; }
+.console .legacy [class*="-btn"]:not(.btn) { border-radius: 8px; transition: background .15s, border-color .15s; }
+.console .legacy [class*="-btn"]:not(.btn):hover { filter: none; transform: none; }
+.console .legacy [class*="-btn"].edit, .console .legacy [class*="-btn"].toggle { background: var(--d-panel); color: var(--d-fg); border: 1px solid var(--d-line-2); }
+.console .legacy [class*="-btn"].delete, .console .legacy .bp-action-btn-sm.reject { background: var(--d-panel); color: var(--d-hot); border: 1px solid var(--d-line-2); }
+.console .legacy .bp-action-btn-sm { display: inline-grid; place-items: center; width: 30px; height: 30px; padding: 0; border-radius: 8px; border: 1px solid var(--d-line-2); background: var(--d-panel); color: var(--d-fg); }
+.console .legacy .bp-action-btn-sm:hover { background: var(--d-hover); }
+.console .legacy .bp-action-btn-sm.approve, .console .legacy .bp-action-btn-sm.complete { color: var(--d-go); }
+.console .legacy .bp-action-btn-sm.start { color: var(--d-info); }
+
+/* ---------- form controls ---------- */
+.console .legacy input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+.console .legacy select, .console .legacy textarea {
+  background: var(--d-panel); color: var(--d-fg); border: 1px solid var(--d-line-2); border-radius: 8px; font-family: var(--f-body); font-size: 14px;
+  transition: border-color .15s, box-shadow .15s;
+}
+.console .legacy input:focus, .console .legacy select:focus, .console .legacy textarea:focus { outline: none; border-color: var(--d-fg); box-shadow: 0 0 0 3px var(--d-focus); }
+.console .legacy select option { background: var(--d-panel); color: var(--d-fg); }
+.console .legacy input::placeholder, .console .legacy textarea::placeholder { color: var(--d-fg3); }
+.console .legacy input[type="checkbox"], .console .legacy input[type="radio"] { accent-color: var(--d-sign); }
+.console .legacy .bp-form-group > label, .console .legacy .bp-filter-group > label {
+  font-family: var(--f-body); font-size: 13px; letter-spacing: 0; text-transform: none; color: var(--d-fg2); font-weight: 500;
+}
+.console .legacy .bp-switch .slider, .console .legacy .slider { background: var(--d-line-2); border: 0; border-radius: 99px; }
+.console .legacy .slider::before { border-radius: 50%; background: #FFFFFF; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.console .legacy .bp-switch input:checked + .slider, .console .legacy input:checked + .slider { background: var(--d-fg); border-color: var(--d-fg); box-shadow: none; }
+.console .legacy input:checked + .slider::before { background: var(--d-bg); }
+
+/* filter chips / tabs (buttons inside filter rows) */
+.console .legacy [class*="-filters"] button, .console .legacy [class*="-tabs"] button, .console .legacy .bp-time-selector button {
+  border-radius: 8px; border: 1px solid var(--d-line-2); background: var(--d-panel); color: var(--d-fg2); font-weight: 500; transition: color .15s, background .15s;
+}
+.console .legacy [class*="-filters"] button:hover, .console .legacy [class*="-tabs"] button:hover, .console .legacy .bp-time-selector button:hover { color: var(--d-fg); background: var(--d-hover); }
+.console .legacy [class*="-filters"] button.active, .console .legacy [class*="-tabs"] button.active, .console .legacy .bp-time-selector button.active {
+  background: var(--d-fg); color: var(--d-bg); border-color: var(--d-fg); box-shadow: none;
+}
+.console .legacy .bp-profile-tabs button.active { border-bottom-color: transparent; }
+
+/* ---------- tables (Stripe-style) ---------- */
+.console .legacy table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.console .legacy thead th, .console .legacy th { background: var(--d-raised) !important; color: var(--d-fg3); font-family: var(--f-body); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; font-weight: 500; border-bottom: 1px solid var(--d-line); height: 40px; }
+.console .legacy td { height: 48px; border-bottom: 1px solid var(--d-line); color: var(--d-fg); }
+.console .legacy tbody tr:hover { background: var(--d-hover) !important; }
+.console .legacy tbody tr:last-child td { border-bottom: 0; }
+.console .legacy td strong, .console .legacy td:first-child { font-variant-numeric: tabular-nums; font-family: var(--f-mono); font-weight: 500; }
+
+.console .legacy [class*="status"]:not(select):not(div[class*="-card"]), .console .legacy [class*="badge"] { border-radius: 99px; font-weight: 500; font-size: 12px; }
+
+/* ---------- modals ---------- */
+.console .bp-modal-overlay { background: rgba(10,10,10,.32) !important; z-index: 2000; animation: lg-fade .15s; }
+.console .bp-modal { background: var(--d-panel) !important; color: var(--d-fg); border: 1px solid var(--d-line); border-radius: 12px !important; box-shadow: 0 24px 60px -24px rgba(0,0,0,.35); animation: lg-pop .2s ease; }
+.console .bp-modal-header, .console .bp-modal-footer { border-color: var(--d-line) !important; }
+.console .bp-modal-header h2, .console .bp-modal-header h3 { font-family: var(--f-body); font-weight: 600; font-size: 18px; }
+.console .bp-modal-close { color: var(--d-fg2); border-radius: 8px; width: 32px; height: 32px; display: grid; place-items: center; background: var(--d-panel); border: 1px solid var(--d-line-2); }
+.console .bp-modal-close:hover { color: var(--d-fg); background: var(--d-hover); }
+@keyframes lg-fade { from { opacity: 0; } }
+@keyframes lg-pop { from { opacity: 0; transform: translateY(6px); } }
+
+/* ---------- empty states & charts ---------- */
+.console .legacy .bp-empty-state { border: 1px dashed var(--d-line-2); border-radius: 10px; color: var(--d-fg3); }
+.console .legacy .bp-empty-state .gl { width: 32px; height: 32px; display: block; margin: 0 auto 10px; color: var(--d-fg3); }
+.console .legacy [class*="bar"]:not([class*="toolbar"]):not([class*="sidebar"]) { border-radius: 3px; }
+.console .legacy [class*="-bar-fill"], .console .legacy [class*="bar-fill"], .console .legacy .bp-bar, .console .legacy .bar {
+  background: var(--d-fg) !important; box-shadow: none;
+}
+
+/* weekly chart: wrappers need a definite height for % bars */
+.console .legacy .bp-chart-bar-wrapper { height: 100%; justify-content: flex-end; }
+.console .legacy .bp-chart-bar { border-radius: 3px 3px 0 0; background: var(--d-bar, #D4D4D4); box-shadow: none; min-height: 28px; align-items: flex-start; padding-top: 8px; color: var(--d-fg); font-family: var(--f-mono); font-size: 12px; animation: lg-grow .5s ease both; transform-origin: bottom; }
+.console .legacy .bp-chart-bar:hover { background: var(--d-fg); color: var(--d-bg); }
+.console .legacy .bp-chart-label { font-family: var(--f-body); font-size: 12px; letter-spacing: 0; color: var(--d-fg3); }
+@keyframes lg-grow { from { transform: scaleY(0); } }
+
+@media (max-width: 760px) {
+  .console .bp-header-actions { width: 100%; }
+  .console .legacy .bp-queue-table-container, .console .legacy .bp-report-table-section { overflow-x: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .console .legacy > * > *, .console .bp-modal, .console .bp-modal-overlay, .console .legacy .bp-chart-bar { animation: none; }
+}
+
+/* the highlighted stat card is ink with light text */
+.console .legacy .bp-feedback-stat-card.primary, .console .legacy .bp-feedback-stat-card.primary * { color: var(--d-bg) !important; }
+.console .legacy .bp-feedback-stat-card.primary { background: var(--d-fg) !important; border-color: var(--d-fg) !important; }
+.console .legacy [class*="-card"]:hover, .console .legacy [class*="-item"]:hover { transform: none !important; }

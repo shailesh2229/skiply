@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Reports.css';
 
@@ -87,13 +88,13 @@ const ReportsExport = () => {
         actions={
           <>
             <Button variant="secondary" onClick={handlePrint}>
-              🖨️ Print
+              <Glyph e="🖨️" /> Print
             </Button>
             <Button variant="secondary" onClick={handleEmailReport}>
-              📧 Email
+              <Glyph e="📧" /> Email
             </Button>
             <Button variant="primary" onClick={() => handleExport('pdf')}>
-              📄 Export PDF
+              <Glyph e="📄" /> Export PDF
             </Button>
           </>
         }
@@ -109,7 +110,7 @@ const ReportsExport = () => {
               className={`bp-quick-report-btn ${reportType === report.type ? 'active' : ''}`}
               onClick={() => setReportType(report.type)}
             >
-              <span className="icon">{report.icon}</span>
+              <span className="icon"><Glyph e={report.icon} size={22} /></span>
               <span className="label">{report.name}</span>
             </button>
           ))}
@@ -180,49 +181,49 @@ const ReportsExport = () => {
         {/* Key Metrics Grid */}
         <div className="bp-report-metrics">
           <div className="bp-metric-card">
-            <div className="metric-icon">📅</div>
+            <div className="metric-icon"><Glyph e="📅" /></div>
             <div className="metric-value">{currentData.totalBookings}</div>
             <div className="metric-label">Total Bookings</div>
           </div>
 
           <div className="bp-metric-card success">
-            <div className="metric-icon">✅</div>
+            <div className="metric-icon"><Glyph e="✅" /></div>
             <div className="metric-value">{currentData.completedBookings}</div>
             <div className="metric-label">Completed</div>
           </div>
 
           <div className="bp-metric-card warning">
-            <div className="metric-icon">❌</div>
+            <div className="metric-icon"><Glyph e="❌" /></div>
             <div className="metric-value">{currentData.cancelledBookings}</div>
             <div className="metric-label">Cancelled</div>
           </div>
 
           <div className="bp-metric-card error">
-            <div className="metric-icon">⚠️</div>
+            <div className="metric-icon"><Glyph e="⚠️" /></div>
             <div className="metric-value">{currentData.noShows}</div>
             <div className="metric-label">No Shows</div>
           </div>
 
           <div className="bp-metric-card">
-            <div className="metric-icon">⏱️</div>
+            <div className="metric-icon"><Glyph e="⏱️" /></div>
             <div className="metric-value">{currentData.avgWaitTime} min</div>
             <div className="metric-label">Avg Wait Time</div>
           </div>
 
           <div className="bp-metric-card">
-            <div className="metric-icon">⏰</div>
+            <div className="metric-icon"><Glyph e="⏰" /></div>
             <div className="metric-value">{currentData.avgServiceTime} min</div>
             <div className="metric-label">Avg Service Time</div>
           </div>
 
           <div className="bp-metric-card success">
-            <div className="metric-icon">⭐</div>
+            <div className="metric-icon"><Glyph e="⭐" /></div>
             <div className="metric-value">{currentData.customerSatisfaction}/5</div>
             <div className="metric-label">Satisfaction</div>
           </div>
 
           <div className="bp-metric-card primary">
-            <div className="metric-icon">💰</div>
+            <div className="metric-icon"><Glyph e="💰" /></div>
             <div className="metric-value">{currentData.revenue}</div>
             <div className="metric-label">Revenue</div>
           </div>
@@ -230,31 +231,31 @@ const ReportsExport = () => {
 
         {/* Additional Insights */}
         <div className="bp-report-insights">
-          <h3>📊 Key Insights</h3>
+          <h3><Glyph e="📊" /> Key Insights</h3>
           <div className="bp-insights-grid">
             <div className="bp-insight-item">
-              <span className="insight-icon">🔥</span>
+              <span className="insight-icon"><Glyph e="🔥" /></span>
               <div>
                 <strong>Busiest Period:</strong>
                 <p>{currentData.peakHour || currentData.busyDay}</p>
               </div>
             </div>
             <div className="bp-insight-item">
-              <span className="insight-icon">📈</span>
+              <span className="insight-icon"><Glyph e="📈" /></span>
               <div>
                 <strong>Completion Rate:</strong>
                 <p>{((currentData.completedBookings / currentData.totalBookings) * 100).toFixed(1)}%</p>
               </div>
             </div>
             <div className="bp-insight-item">
-              <span className="insight-icon">📉</span>
+              <span className="insight-icon"><Glyph e="📉" /></span>
               <div>
                 <strong>Cancellation Rate:</strong>
                 <p>{((currentData.cancelledBookings / currentData.totalBookings) * 100).toFixed(1)}%</p>
               </div>
             </div>
             <div className="bp-insight-item">
-              <span className="insight-icon">⚡</span>
+              <span className="insight-icon"><Glyph e="⚡" /></span>
               <div>
                 <strong>No-Show Rate:</strong>
                 <p>{((currentData.noShows / currentData.totalBookings) * 100).toFixed(1)}%</p>
@@ -265,7 +266,7 @@ const ReportsExport = () => {
 
         {/* Department Breakdown */}
         <div className="bp-report-table-section">
-          <h3>🏢 Department Breakdown</h3>
+          <h3><Glyph e="🏢" /> Department Breakdown</h3>
           <table className="bp-report-table">
             <thead>
               <tr>
@@ -283,7 +284,7 @@ const ReportsExport = () => {
                 <td>98</td>
                 <td>92</td>
                 <td>15 min</td>
-                <td>⭐ 4.8</td>
+                <td><Glyph e="⭐" /> 4.8</td>
                 <td>₹18,500</td>
               </tr>
               <tr>
@@ -291,7 +292,7 @@ const ReportsExport = () => {
                 <td>85</td>
                 <td>82</td>
                 <td>20 min</td>
-                <td>⭐ 4.5</td>
+                <td><Glyph e="⭐" /> 4.5</td>
                 <td>₹15,300</td>
               </tr>
               <tr>
@@ -299,7 +300,7 @@ const ReportsExport = () => {
                 <td>64</td>
                 <td>60</td>
                 <td>18 min</td>
-                <td>⭐ 4.2</td>
+                <td><Glyph e="⭐" /> 4.2</td>
                 <td>₹11,800</td>
               </tr>
             </tbody>
@@ -309,22 +310,22 @@ const ReportsExport = () => {
 
       {/* Export Options */}
       <div className="bp-export-section">
-        <h3>📦 Export Options</h3>
+        <h3><Glyph e="📦" /> Export Options</h3>
         <div className="bp-export-buttons">
           <button className="bp-export-btn pdf" onClick={() => handleExport('pdf')}>
-            <span className="icon">📄</span>
+            <span className="icon"><Glyph e="📄" /></span>
             <span className="label">Export as PDF</span>
           </button>
           <button className="bp-export-btn excel" onClick={() => handleExport('csv')}>
-            <span className="icon">📊</span>
+            <span className="icon"><Glyph e="📊" /></span>
             <span className="label">Export as CSV</span>
           </button>
           <button className="bp-export-btn print" onClick={handlePrint}>
-            <span className="icon">🖨️</span>
+            <span className="icon"><Glyph e="🖨️" /></span>
             <span className="label">Print Report</span>
           </button>
           <button className="bp-export-btn email" onClick={handleEmailReport}>
-            <span className="icon">📧</span>
+            <span className="icon"><Glyph e="📧" /></span>
             <span className="label">Email Report</span>
           </button>
         </div>

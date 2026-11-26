@@ -24,7 +24,7 @@
 
 .bp-quick-report-btn {
   padding: 20px;
-  background: white;
+  background: var(--d-tile);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -38,7 +38,7 @@
 .bp-quick-report-btn:hover {
   border-color: var(--color-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-quick-report-btn.active {
@@ -67,10 +67,10 @@
 
 /* Report Summary */
 .bp-report-summary {
-  background: white;
+  background: var(--d-tile);
   padding: 30px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
   margin-bottom: 30px;
 }
 
@@ -102,7 +102,7 @@
 
 .bp-metric-card {
   padding: 20px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
   border: 2px solid var(--color-border);
   text-align: center;
@@ -111,26 +111,26 @@
 
 .bp-metric-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-metric-card.success {
-  background: rgba(16, 185, 129, 0.05);
-  border-color: #10b981;
+  background: var(--d-go-bg);
+  border-color: var(--d-go);
 }
 
 .bp-metric-card.warning {
-  background: rgba(245, 158, 11, 0.05);
-  border-color: #f59e0b;
+  background: var(--d-warn-bg);
+  border-color: var(--d-warn);
 }
 
 .bp-metric-card.error {
-  background: rgba(239, 68, 68, 0.05);
-  border-color: #ef4444;
+  background: var(--d-hot-bg);
+  border-color: var(--d-hot);
 }
 
 .bp-metric-card.primary {
-  background: rgba(1, 22, 39, 0.05);
+  background: var(--d-sunk);
   border-color: var(--color-secondary);
 }
 
@@ -175,7 +175,7 @@
   align-items: center;
   gap: 15px;
   padding: 15px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
   border-left: 4px solid var(--color-secondary);
 }
@@ -211,13 +211,13 @@
 .bp-report-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: var(--d-tile);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .bp-report-table thead {
-  background: #f9fafb;
+  background: var(--d-sunk);
 }
 
 .bp-report-table th {
@@ -230,20 +230,20 @@
 
 .bp-report-table td {
   padding: 15px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid var(--d-hover);
   color: var(--color-text);
 }
 
 .bp-report-table tr:hover {
-  background: #f9fafb;
+  background: var(--d-sunk);
 }
 
 /* Export Section */
 .bp-export-section {
-  background: white;
+  background: var(--d-tile);
   padding: 30px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-export-section h3 {
@@ -260,7 +260,7 @@
 
 .bp-export-btn {
   padding: 20px;
-  background: white;
+  background: var(--d-tile);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -276,7 +276,7 @@
 .bp-export-btn:hover {
   border-color: var(--color-secondary);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-export-btn .icon {
@@ -284,39 +284,39 @@
 }
 
 .bp-export-btn.pdf {
-  border-color: #ef4444;
+  border-color: var(--d-hot);
 }
 
 .bp-export-btn.pdf:hover {
-  background: rgba(239, 68, 68, 0.05);
-  border-color: #ef4444;
+  background: var(--d-hot-bg);
+  border-color: var(--d-hot);
 }
 
 .bp-export-btn.excel {
-  border-color: #10b981;
+  border-color: var(--d-go);
 }
 
 .bp-export-btn.excel:hover {
-  background: rgba(16, 185, 129, 0.05);
-  border-color: #10b981;
+  background: var(--d-go-bg);
+  border-color: var(--d-go);
 }
 
 .bp-export-btn.print {
-  border-color: #3b82f6;
+  border-color: var(--d-info);
 }
 
 .bp-export-btn.print:hover {
-  background: rgba(59, 130, 246, 0.05);
-  border-color: #3b82f6;
+  background: var(--d-info-bg);
+  border-color: var(--d-info);
 }
 
 .bp-export-btn.email {
-  border-color: #f59e0b;
+  border-color: var(--d-warn);
 }
 
 .bp-export-btn.email:hover {
-  background: rgba(245, 158, 11, 0.05);
-  border-color: #f59e0b;
+  background: var(--d-warn-bg);
+  border-color: var(--d-warn);
 }
 
 /* Responsive */
