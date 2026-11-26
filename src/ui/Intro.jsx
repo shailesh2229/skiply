@@ -11,9 +11,9 @@ export default function Intro() {
   useEffect(() => {
     if (!show) return undefined;
     try { sessionStorage.setItem('skiply.intro', '1'); } catch (e) { /* ignore */ }
-    const a = setTimeout(() => setWord('SKIPLY'), 120);
-    const b = setTimeout(() => setLeaving(true), 1500);
-    const c = setTimeout(() => setShow(false), 2200);
+    const a = setTimeout(() => setWord('SKIPLY'), 60);
+    const b = setTimeout(() => setLeaving(true), 760);
+    const c = setTimeout(() => setShow(false), 1150);
     return () => [a, b, c].forEach(clearTimeout);
   }, [show]);
   if (!show) return null;
@@ -21,8 +21,8 @@ export default function Intro() {
     <div className={`intro ${leaving ? 'is-leaving' : ''}`} onClick={() => setShow(false)} role="presentation">
       <div className="intro-in">
         <p className="mono intro-k">NOW ARRIVING</p>
-        <SplitFlap text={word} size={6} className="intro-board" stagger={90} />
-        <p className="mono intro-k">PLATFORM 0 · NO WAITING</p>
+        <SplitFlap text={word} size={6} className="intro-board" stagger={45} />
+        <p className="mono intro-k">SKIP THE LINE</p>
       </div>
     </div>
   );

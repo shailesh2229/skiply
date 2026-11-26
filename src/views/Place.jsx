@@ -9,16 +9,20 @@ import { DAY_NAMES, fmtMin, rangesForDate } from '../lib/hours';
 import { distanceKm, fmtKm } from '../lib/geo';
 import { createTicket } from '../lib/tickets';
 import Emblem from '../ui/Emblem';
+import VenuePhoto from '../ui/VenuePhoto';
 import PlaceMap from '../ui/PlaceMap';
 import Ticket from '../ui/Ticket';
-import { crowdLevel } from '../ui/PlaceCard';
+import { crowdLevel, usePlaceActions, HeartIcon, CompareIcon } from '../ui/PlaceCard';
+import { blendEstimate, bucketLabel, freshReports, REPORT_BUCKETS } from '../lib/reports';
+import { toast, chime, burst } from '../lib/fx';
+import '../styles/tickets2.css';
 
 export default function Place() {
   const { pid } = useParams();
   const routeState = useLocation().state;
   const [place, setPlace] = useState(() => routeState?.place || cachedPlace(pid));
   const [status, setStatus] = useState(place ? 'ok' : 'loading');
-  const { location } = useApp();
+  const { location, reports } = useApp();
   const now = useNow(30000);
 
   useEffect(() => {
@@ -45,7 +49,9 @@ export default function Place() {
   }
 
   const cat = CATEGORIES[place.category];
-  const est = estimateAt(place, new Date(now));
+  const placeReports = reports[place.id] || [];
+  // Date.now(), not the 30s tick, so a report filed a moment ago counts immediately.
+  const est = blendEstimate(estimateAt(place, new Date(now)), placeReports, Date.now());
   const dist = location ? distanceKm(location, place) : null;
   return (
     <main className="place">
@@ -55,9 +61,9 @@ export default function Place() {
         </nav>
 
         <header className="place-head">
-          <div className="place-sign">
-            <span className="place-plat"><span className="mono">PLATFORM</span><b>{cat.platform}</b></span>
-            <Emblem category={cat.key} size={40} />
+          <div className="place-photo">
+            <VenuePhoto place={place} width={640} variant="hero" />
+            <span className="place-photo-tag"><Emblem category={cat.key} size={14} /> {cat.singular}</span>
           </div>
           <div className="place-title">
             <p className="kicker">{cat.singular}{place.speciality ? ` · ${place.speciality.replace(/[_;]/g, ' ')}` : ''}{place.operator ? ` · ${place.operator}` : ''}</p>
@@ -66,13 +72,16 @@ export default function Place() {
             <p className="place-addr">
               {place.address || 'Street address not mapped yet'}{dist != null && <span className="muted"> · {fmtKm(dist)} from {location.name}</span>}
             </p>
+            <PlaceActions place={place} />
           </div>
         </header>
 
         <div className="place-grid">
           <div className="place-main">
             <NowPanel est={est} now={now} />
+            <ReportLine place={place} reports={placeReports} est={est} />
             <Forecast place={place} now={now} />
+            <WeekStrip place={place} now={now} />
             <Details place={place} />
           </div>
           <aside className="place-side">
@@ -93,7 +102,9 @@ function NowPanel({ est, now }) {
       <div className="np-cell np-big">
         <span className="kicker">Waiting now · est.</span>
         <span className="np-n display">{closed ? '—' : est.people}</span>
-        <span className="np-l">{closed ? 'Closed right now' : est.people === 1 ? 'person in line' : 'people in line'}</span>
+        <span className="np-l">{closed ? 'Closed right now' : est.people === 1 ? 'person in line' : 'people in line'}
+          {est.adjusted && <> <span className="np-was">model {est.model.people}</span></>}</span>
+        {est.adjusted && <span className="np-adj"><i />Adjusted by {est.reportCount} passenger report{est.reportCount === 1 ? '' : 's'}</span>}
       </div>
       <div className="np-cell">
         <span className="kicker">Your wait if you join</span>
@@ -107,7 +118,7 @@ function NowPanel({ est, now }) {
         <span className="kicker">Status</span>
         <span className="np-m np-status"><span className={`dot ${closed ? 'dot-stop' : 'dot-go pulse'}`} />{est.status.label || 'Hours unknown'}</span>
       </div>
-      <p className="np-note mono">SKIPLY ESTIMATE · {new Date(now).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })} · THIS VENUE HASN’T CONNECTED A LIVE COUNTER YET · <Link to="/about#estimates">HOW WE ESTIMATE</Link></p>
+      <p className="np-note mono">{est.adjusted ? 'SKIPLY ESTIMATE + REPORTS FILED ON THIS DEVICE' : 'SKIPLY ESTIMATE'} · {new Date(now).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' })} · THIS VENUE HASN’T CONNECTED A LIVE COUNTER YET · <Link to="/about#estimates">HOW WE ESTIMATE</Link></p>
     </section>
   );
 }
@@ -233,6 +244,10 @@ function Booking({ place, est, now }) {
     const t = createTicket({ place, department: dept, mode, slot: slot?.getTime(), estimate: est, passenger: p });
     addTicket(t);
     setPrinted(t);
+    chime('ping');
+    const r = document.querySelector('.booking-go')?.getBoundingClientRect();
+    burst(r ? r.left + r.width / 2 : window.innerWidth / 2, r ? r.top : window.innerHeight / 2);
+    toast({ tone: 'go', title: `Token ${t.token} issued`, body: `${place.name} · ${dept}`, action: { label: 'My tickets', to: '/tickets' }, ttl: 5000 });
   };
 
   if (printed) {
@@ -320,5 +335,144 @@ function Booking({ place, est, now }) {
       </button>
       <p className="muted small booking-fine">Free. Tokens are saved on this device. Until {place.name} connects to Skiply, your token tracks our estimate of the queue, so please arrive a few minutes early.</p>
     </div>
+  );
+}
+
+function PlaceActions({ place }) {
+  const { fav, cmp, onFav, onCmp } = usePlaceActions(place);
+  const share = async () => {
+    const url = window.location.href.split('#')[0];
+    const text = `${place.name} on Skiply: live queue estimate and tokens`;
+    try {
+      if (navigator.share) { await navigator.share({ title: place.name, text, url }); return; }
+      await navigator.clipboard.writeText(url);
+      toast({ title: 'Link copied', body: place.name, tone: 'go', ttl: 2500 });
+    } catch (e) { /* share sheet dismissed */ }
+  };
+  return (
+    <div className="place-acts">
+      <button className="place-act is-fav" aria-pressed={fav} onClick={onFav}><HeartIcon /> {fav ? 'Saved' : 'Save'}</button>
+      <button className="place-act" aria-pressed={cmp} onClick={onCmp}><CompareIcon /> {cmp ? 'In compare' : 'Compare'}</button>
+      <button className="place-act" onClick={share}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6" /></svg>
+        Share
+      </button>
+      <WatchButton place={place} />
+    </div>
+  );
+}
+
+const UNDER = [5, 10, 15, 20, 30];
+
+/** "Tell me when the line is short": one alert (chime + voice + notification) when the wait drops. */
+function WatchButton({ place }) {
+  const { watchFor, setWatch, clearWatch } = useApp();
+  const [open, setOpen] = useState(false);
+  const w = watchFor(place.id);
+  const choose = (m) => {
+    setWatch(place, m); setOpen(false);
+    toast({ tone: 'go', title: 'We’ll tell you', body: `When the wait at ${place.name} drops to ${m} min or less, you’ll hear a chime and an announcement.`, ttl: 5000 });
+  };
+  if (w) {
+    return (
+      <button className="place-act is-watch" aria-pressed="true" onClick={() => { clearWatch(place.id); toast({ title: 'Alert removed', body: place.name, ttl: 2500 }); }}>
+        <span className="watch-bell"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 21h4" /></svg></span> Alert at ≤ {w.under} min ✕
+      </button>
+    );
+  }
+  return (
+    <span className="watch-wrap">
+      <button className="place-act" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4zM10 21h4" /></svg> Alert me when it’s short
+      </button>
+      {open && (
+        <span className="watch-pop" role="menu">
+          <span className="kicker">Tell me when the wait is</span>
+          <span className="watch-opts">
+            {UNDER.map((m) => <button key={m} role="menuitem" className="chip" onClick={() => choose(m)}>≤ {m} min</button>)}
+          </span>
+        </span>
+      )}
+    </span>
+  );
+}
+
+const ago = (t) => { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : `${Math.floor(m / 60)} h ago`; };
+
+function ReportLine({ place, reports, est }) {
+  const { addReport } = useApp();
+  const [picked, setPicked] = useState(null);
+  const closed = est.status.open === false;
+  const fresh = freshReports(reports, Date.now());
+  const report = (b, e) => {
+    addReport(place.id, { people: b.people });
+    setPicked(b.key);
+    const r = e.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 18);
+    chime('ping');
+    toast({ tone: 'go', title: 'Thanks for reporting', body: `${b.label === 'No line' ? 'No line' : `${b.label} people`} at ${place.name}. The estimate on this device now includes it.`, ttl: 4000 });
+  };
+  return (
+    <section className="report" aria-label="Report the line">
+      <div className="report-head">
+        <div>
+          <p className="kicker">You’re here? Help the next person</p>
+          <h2 className="h3">Report the <em>line</em></h2>
+        </div>
+        <p className="muted small" style={{ maxWidth: '36ch' }}>{closed ? 'The venue looks closed. If it’s open, a report still helps.' : 'Roughly how many people are waiting right now?'}</p>
+      </div>
+      <div className="report-opts">
+        {REPORT_BUCKETS.map((b, i) => (
+          <button key={b.key} className={`report-opt ${picked === b.key ? 'is-picked' : ''}`} onClick={(e) => report(b, e)}>
+            <span className="figs" aria-hidden="true">{Array.from({ length: i + 1 }, (_, k) => <i key={k} style={{ height: `${40 + k * 15}%` }} />)}</span>
+            <b>{b.label}</b>
+            <span className="mono small muted">{b.key === 'none' ? 'walk in' : 'people'}</span>
+          </button>
+        ))}
+      </div>
+      {reports.length > 0 && (
+        <div className="report-log">
+          <span style={{ border: 0, background: 'none', padding: 0 }}>{fresh.length ? `${fresh.length} FRESH` : 'NONE FRESH'} · LAST 45 MIN COUNT</span>
+          {reports.slice(0, 5).map((r) => <span key={r.t}>{bucketLabel(r.people)} · {ago(r.t)}</span>)}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function WeekStrip({ place, now }) {
+  const days = useMemo(() => {
+    const today = new Date(now);
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today); d.setDate(d.getDate() + i);
+      const all = dayForecast(place, d).filter((h) => h.status.open !== false && (i > 0 || h.hour > today.getHours()));
+      // Prefer waking hours (7 AM–9 PM); 24-hour venues are always "calmest" at 3 AM, which helps nobody.
+      const awake = all.filter((h) => h.hour >= 7 && h.hour <= 21);
+      const hours = awake.length ? awake : all;
+      const best = hours.sort((a, b) => a.wait - b.wait)[0];
+      return { d, i, best };
+    });
+  }, [place, Math.floor(now / 3600000)]); // eslint-disable-line react-hooks/exhaustive-deps
+  const open = days.filter((x) => x.best);
+  const max = Math.max(10, ...open.map((x) => x.best.wait));
+  const overall = open.slice().sort((a, b) => a.best.wait - b.best.wait)[0];
+  return (
+    <section className="week">
+      <p className="kicker">Best time this week</p>
+      <h2 className="h3">{overall ? <>Calmest: <em>{overall.i === 0 ? 'today' : overall.d.toLocaleDateString('en-IN', { weekday: 'long' })}</em> at {fmtMin(overall.best.hour * 60)}</> : 'No open hours this week'}</h2>
+      <div className="week-strip">
+        {days.map(({ d, i, best }) => {
+          const lvl = best ? crowdLevel(best) : 'closed';
+          return (
+            <div key={i} className={`week-day lvl-${lvl} ${!best ? 'is-closed' : ''} ${overall && overall.i === i ? 'is-best' : ''}`}>
+              <span className="wk-bar" style={{ height: best ? `${Math.max(8, (best.wait / max) * 100)}%` : '0%' }} />
+              <span className="mono">{i === 0 ? 'TODAY' : d.toLocaleDateString('en-IN', { weekday: 'short' }).toUpperCase()}</span>
+              <b>{best ? fmtMin(best.hour * 60).replace(':00', '') : i === 0 ? 'Day’s done' : 'Closed'}</b>
+              <span className="wk-w">{best ? fmtWait(best.wait) : '—'}</span>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Queue.css';
 
@@ -108,10 +109,10 @@ const QueueView = () => {
         actions={
           <>
             <Button variant="secondary" onClick={handleAddWalkIn}>
-              🚶 Add Walk-in
+              <Glyph e="🚶" /> Add Walk-in
             </Button>
             <Button variant="primary" onClick={() => window.location.reload()}>
-              🔄 Refresh Queue
+              <Glyph e="🔄" /> Refresh Queue
             </Button>
           </>
         }
@@ -141,17 +142,17 @@ const QueueView = () => {
       {/* Queue Stats */}
       <div className="bp-queue-summary">
         <div className="bp-queue-stat-item">
-          <span className="icon">⏳</span>
+          <span className="icon"><Glyph e="⏳" /></span>
           <span className="value">{queueItems.filter(i => i.status === 'pending').length}</span>
           <span className="label">Pending</span>
         </div>
         <div className="bp-queue-stat-item">
-          <span className="icon">🕐</span>
+          <span className="icon"><Glyph e="🕐" /></span>
           <span className="value">{queueItems.filter(i => i.status === 'waiting').length}</span>
           <span className="label">Waiting</span>
         </div>
         <div className="bp-queue-stat-item">
-          <span className="icon">▶️</span>
+          <span className="icon"><Glyph e="▶️" /></span>
           <span className="value">{queueItems.filter(i => i.status === 'in-progress').length}</span>
           <span className="label">In Progress</span>
         </div>
@@ -181,7 +182,7 @@ const QueueView = () => {
                 <td>{item.department}</td>
                 <td>
                   <span className={`bp-type-badge ${item.bookingType}`}>
-                    {item.bookingType === 'online' ? '🌐' : '🚶'} {item.bookingType}
+                    <Glyph e={item.bookingType === 'online' ? '🌐' : '🚶'} size={13} /> {item.bookingType}
                   </span>
                 </td>
                 <td>
@@ -196,15 +197,15 @@ const QueueView = () => {
                   <div className="bp-queue-actions">
                     {item.status === 'pending' && (
                       <>
-                        <button className="bp-action-btn-sm approve" onClick={() => handleApproveBooking(item.id)}>✓</button>
-                        <button className="bp-action-btn-sm reject" onClick={() => handleRejectBooking(item.id)}>✗</button>
+                        <button className="bp-action-btn-sm approve" onClick={() => handleApproveBooking(item.id)}><Glyph e="✓" /></button>
+                        <button className="bp-action-btn-sm reject" onClick={() => handleRejectBooking(item.id)}><Glyph e="✗" /></button>
                       </>
                     )}
                     {item.status === 'waiting' && (
-                      <button className="bp-action-btn-sm start" onClick={() => handleStartService(item.id)}>▶️</button>
+                      <button className="bp-action-btn-sm start" onClick={() => handleStartService(item.id)}><Glyph e="▶️" /></button>
                     )}
                     {item.status === 'in-progress' && (
-                      <button className="bp-action-btn-sm complete" onClick={() => handleCompleteService(item.id)}>✅</button>
+                      <button className="bp-action-btn-sm complete" onClick={() => handleCompleteService(item.id)}><Glyph e="✅" /></button>
                     )}
                   </div>
                 </td>
@@ -215,7 +216,7 @@ const QueueView = () => {
 
         {filteredQueue.length === 0 && (
           <div className="bp-empty-state">
-            <p>📭 No items in queue</p>
+            <p><Glyph e="📭" /> No items in queue</p>
           </div>
         )}
       </div>

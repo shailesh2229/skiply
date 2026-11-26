@@ -61,6 +61,10 @@ function normalize({ type, id, lat, lng, tags, address }) {
     operator: tags.operator || tags.brand || null,
     speciality: tags['healthcare:speciality'] || tags.cuisine || null,
     emergency: tags.emergency || null,
+    // photo hints mapped by OSM volunteers
+    image: /^https:\/\//.test(tags.image || '') ? tags.image : null,
+    commons: tags.wikimedia_commons || null,
+    wikidata: /^Q\d+$/.test(tags.wikidata || '') ? tags.wikidata : null,
   };
   const prev = memory.get(pid);
   const merged = prev ? { ...prev, ...Object.fromEntries(Object.entries(place).filter(([, v]) => v)) } : place;
@@ -138,7 +142,7 @@ function finish(list, origin) {
  * Resolves to { places, source: 'overpass' | 'nominatim' }.
  */
 export async function fetchNearby({ lat, lng }, { radius = 3000, onProgress, signal } = {}) {
-  const key = `skiply.near.${lat.toFixed(3)},${lng.toFixed(3)},${radius}`;
+  const key = `skiply.near2.${lat.toFixed(3)},${lng.toFixed(3)},${radius}`;
   const origin = { lat, lng };
   const cached = cacheGet(key);
   if (cached) { cached.places.forEach((p) => memory.set(p.id, p)); return cached; }
@@ -159,7 +163,7 @@ export async function fetchNearby({ lat, lng }, { radius = 3000, onProgress, sig
 export function cachedPlace(pid) { return memory.get(pid) || null; }
 
 export async function fetchPlace(pid) {
-  const key = `skiply.place.${pid}`;
+  const key = `skiply.place2.${pid}`;
   const cached = cacheGet(key);
   if (cached) { memory.set(pid, cached); return cached; }
   const T = { n: 'N', w: 'W', r: 'R' }[pid[0]];

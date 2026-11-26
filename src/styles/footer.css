@@ -1,0 +1,17 @@
+/* Premium black footer */
+.pfoot { background: #0A0A0A; color: #FAFAFA; padding: clamp(72px, 9vw, 112px) 0 32px; border-top: 1px solid #1F1F1F; }
+.pfoot-top { display: grid; grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr)); gap: 40px; }
+.pfoot-lead { display: grid; gap: 14px; align-content: start; justify-items: start; }
+.pfoot-brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 700; font-size: 1.35rem; letter-spacing: -.03em; color: #fff; }
+.pfoot-lead p { color: #8F8F8F; font-size: 1.02rem; max-width: 30ch; }
+.pfoot-cta { margin-top: 8px; display: inline-flex; align-items: center; height: 46px; padding: 0 22px; border-radius: 999px; background: #fff; color: #0A0A0A; font-weight: 600; font-size: .94rem; transition: background .2s; }
+.pfoot-cta:hover { background: #E7E7E5; }
+.pfoot-col { display: grid; gap: 11px; align-content: start; }
+.pfoot-col p { font-size: .82rem; color: #737373; margin-bottom: 6px; }
+.pfoot-col a { color: #D4D4D4; font-size: .94rem; width: fit-content; transition: color .2s; }
+.pfoot-col a:hover { color: #fff; }
+.pfoot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; margin-top: clamp(56px, 8vw, 96px); padding-top: 24px; border-top: 1px solid #1F1F1F; font-size: .82rem; color: #737373; }
+.pfoot-base a { color: #A3A3A3; text-decoration: underline; text-underline-offset: 2px; }
+.pfoot-base a:hover { color: #fff; }
+@media (max-width: 860px) { .pfoot-top { grid-template-columns: 1fr 1fr; } .pfoot-lead { grid-column: 1 / -1; } }
+@media (max-width: 420px) { .pfoot-top { grid-template-columns: 1fr 1fr; gap: 32px 20px; } }

@@ -14,10 +14,10 @@
 }
 
 .bp-feedback-stat-card {
-  background: white;
+  background: var(--d-tile);
   padding: 20px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
   display: flex;
   align-items: center;
   gap: 15px;
@@ -29,8 +29,8 @@
 }
 
 .bp-feedback-stat-card.primary {
-  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
-  color: white;
+  background: var(--d-fg);
+  color: var(--d-bg);
 }
 
 .bp-feedback-stat-card.primary .bp-stat-label {
@@ -38,18 +38,18 @@
 }
 
 .bp-feedback-stat-card.positive {
-  background: rgba(16, 185, 129, 0.1);
-  border-left: 4px solid #10b981;
+  background: var(--d-go-bg);
+  border-left: 4px solid var(--d-go);
 }
 
 .bp-feedback-stat-card.neutral {
-  background: rgba(59, 130, 246, 0.1);
-  border-left: 4px solid #3b82f6;
+  background: var(--d-info-bg);
+  border-left: 4px solid var(--d-info);
 }
 
 .bp-feedback-stat-card.negative {
-  background: rgba(239, 68, 68, 0.1);
-  border-left: 4px solid #ef4444;
+  background: var(--d-hot-bg);
+  border-left: 4px solid var(--d-hot);
 }
 
 .bp-stat-icon {
@@ -80,10 +80,10 @@
 
 /* Feedback Section */
 .bp-feedback-section {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
   margin-bottom: 25px;
 }
 
@@ -103,7 +103,7 @@
 
 .bp-dept-rating-card {
   padding: 20px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
   border: 2px solid var(--color-border);
 }
@@ -129,7 +129,7 @@
 
 .bp-dept-rating-bar {
   height: 8px;
-  background: #e5e7eb;
+  background: var(--d-line);
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 10px;
@@ -149,7 +149,7 @@
 }
 
 .bp-dept-rating-stats .positive {
-  color: #10b981;
+  color: var(--d-go);
   font-weight: 600;
 }
 
@@ -169,7 +169,7 @@
 }
 
 .bp-feedback-card {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
   border: 2px solid var(--color-border);
@@ -182,15 +182,15 @@
 }
 
 .bp-feedback-card.sentiment-positive {
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--d-go);
 }
 
 .bp-feedback-card.sentiment-neutral {
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--d-info);
 }
 
 .bp-feedback-card.sentiment-negative {
-  border-left: 4px solid #ef4444;
+  border-left: 4px solid var(--d-hot);
 }
 
 .bp-feedback-header {
@@ -271,24 +271,24 @@
 }
 
 .sentiment-badge.positive {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  background: var(--d-go-bg);
+  color: var(--d-go);
 }
 
 .sentiment-badge.neutral {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: var(--d-info-bg);
+  color: var(--d-info);
 }
 
 .sentiment-badge.negative {
-  background: rgba(239, 68, 68, 0.1);
-  color: #ef4444;
+  background: var(--d-hot-bg);
+  color: var(--d-hot);
 }
 
 .bp-feedback-reply {
   margin-top: 15px;
   padding: 15px;
-  background: rgba(1, 22, 39, 0.05);
+  background: var(--d-sunk);
   border-left: 3px solid var(--color-secondary);
   border-radius: 8px;
 }
@@ -331,7 +331,7 @@
 /* Reply Modal Context */
 .bp-reply-context {
   padding: 15px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
   margin-bottom: 20px;
 }

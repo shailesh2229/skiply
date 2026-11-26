@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph, { Stars } from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Feedback.css';
 
@@ -91,9 +92,7 @@ const FeedbackRatings = () => {
     alert('Reply sent successfully!');
   };
 
-  const renderStars = (rating) => {
-    return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
-  };
+  const renderStars = (rating) => <Stars value={rating} />;
 
   const filteredFeedbacks = feedbacks.filter(f => {
     const ratingMatch = filterRating === 'all' || f.rating === parseInt(filterRating);
@@ -111,7 +110,7 @@ const FeedbackRatings = () => {
       {/* Overall Stats */}
       <div className="bp-feedback-stats">
         <div className="bp-feedback-stat-card primary">
-          <div className="bp-stat-icon">⭐</div>
+          <div className="bp-stat-icon"><Glyph e="⭐" /></div>
           <div className="bp-stat-info">
             <div className="bp-stat-value">{overallRating}/5.0</div>
             <div className="bp-stat-label">Overall Rating</div>
@@ -119,7 +118,7 @@ const FeedbackRatings = () => {
         </div>
 
         <div className="bp-feedback-stat-card">
-          <div className="bp-stat-icon">💬</div>
+          <div className="bp-stat-icon"><Glyph e="💬" /></div>
           <div className="bp-stat-info">
             <div className="bp-stat-value">{totalReviews}</div>
             <div className="bp-stat-label">Total Reviews</div>
@@ -127,7 +126,7 @@ const FeedbackRatings = () => {
         </div>
 
         <div className="bp-feedback-stat-card positive">
-          <div className="bp-stat-icon">😊</div>
+          <div className="bp-stat-icon"><Glyph e="😊" /></div>
           <div className="bp-stat-info">
             <div className="bp-stat-value">{sentimentData.positive}</div>
             <div className="bp-stat-label">Positive</div>
@@ -135,7 +134,7 @@ const FeedbackRatings = () => {
         </div>
 
         <div className="bp-feedback-stat-card neutral">
-          <div className="bp-stat-icon">😐</div>
+          <div className="bp-stat-icon"><Glyph e="😐" /></div>
           <div className="bp-stat-info">
             <div className="bp-stat-value">{sentimentData.neutral}</div>
             <div className="bp-stat-label">Neutral</div>
@@ -143,7 +142,7 @@ const FeedbackRatings = () => {
         </div>
 
         <div className="bp-feedback-stat-card negative">
-          <div className="bp-stat-icon">😟</div>
+          <div className="bp-stat-icon"><Glyph e="😟" /></div>
           <div className="bp-stat-info">
             <div className="bp-stat-value">{sentimentData.negative}</div>
             <div className="bp-stat-label">Negative</div>
@@ -153,13 +152,13 @@ const FeedbackRatings = () => {
 
       {/* Department Performance */}
       <div className="bp-feedback-section">
-        <h3>📊 Department Performance</h3>
+        <h3><Glyph e="📊" /> Department Performance</h3>
         <div className="bp-dept-ratings">
           {departmentStats.map((dept, index) => (
             <div key={index} className="bp-dept-rating-card">
               <div className="bp-dept-rating-header">
                 <h4>{dept.name}</h4>
-                <span className="bp-dept-avg-rating">⭐ {dept.avgRating}</span>
+                <span className="bp-dept-avg-rating"><Glyph e="⭐" /> {dept.avgRating}</span>
               </div>
               <div className="bp-dept-rating-bar">
                 <div 
@@ -202,7 +201,7 @@ const FeedbackRatings = () => {
 
       {/* Feedback List */}
       <div className="bp-feedback-section">
-        <h3>💬 Customer Reviews ({filteredFeedbacks.length})</h3>
+        <h3><Glyph e="💬" /> Customer Reviews ({filteredFeedbacks.length})</h3>
         <div className="bp-feedback-list">
           {filteredFeedbacks.map(feedback => (
             <div key={feedback.id} className={`bp-feedback-card sentiment-${feedback.sentiment}`}>
@@ -230,8 +229,8 @@ const FeedbackRatings = () => {
 
               <div className="bp-feedback-sentiment">
                 <span className={`sentiment-badge ${feedback.sentiment}`}>
-                  {feedback.sentiment === 'positive' ? '😊 Positive' : 
-                   feedback.sentiment === 'neutral' ? '😐 Neutral' : '😟 Negative'}
+                  {feedback.sentiment === 'positive' ? <><Glyph e="😊" /> Positive</> : 
+                   feedback.sentiment === 'neutral' ? <><Glyph e="😐" /> Neutral</> : <><Glyph e="😟" /> Negative</>}
                 </span>
               </div>
 
@@ -248,7 +247,7 @@ const FeedbackRatings = () => {
                     className="bp-reply-btn"
                     onClick={() => handleReply(feedback)}
                   >
-                    💬 Reply to Customer
+                    <Glyph e="💬" /> Reply to Customer
                   </button>
                 </div>
               )}

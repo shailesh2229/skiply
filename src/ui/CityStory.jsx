@@ -105,7 +105,7 @@ export default function CityStory({ location, places, now, loading, onSelect, he
             )}
             {s.kind === 'cat' && (
               <article className="story-card" style={{ '--c': CATEGORIES[s.cat].neon }}>
-                <p className="kicker" style={{ '--c': CATEGORIES[s.cat].neon }}><span className="story-sw" /> Platform {CATEGORIES[s.cat].platform}</p>
+                <p className="kicker" style={{ '--c': CATEGORIES[s.cat].neon }}><span className="story-sw" /> {CATEGORIES[s.cat].label}</p>
                 <h2 className="h2">{s.count} {CATEGORIES[s.cat].label.toLowerCase()} <em>lit up.</em></h2>
                 <p>Each glowing column is a real {CATEGORIES[s.cat].singular.toLowerCase()} from OpenStreetMap. The taller it stands, the longer the line Skiply expects right now.</p>
                 {s.busy && <p className="muted small">Tallest right now: <b>{s.busy.p.name}</b>, about {fmtWait(s.busy.e.wait)}.</p>}

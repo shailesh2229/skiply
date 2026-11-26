@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Navbar — live city chip, live ticket chip, rolling labels, scroll morph,
+   self-drawing logo, mega menu. Monochrome, no glows.
+   ========================================================================== */
+:root .xnav .nav-pill {
+  position: relative; height: 68px; border-radius: 999px; padding: 0 10px 0 16px; gap: 12px;
+  background: var(--card); border: 1px solid var(--rule); box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 32px -24px rgba(0,0,0,.35);
+  transition: height .5s cubic-bezier(.2,.8,.2,1), max-width .6s cubic-bezier(.2,.8,.2,1), background .35s, border-color .35s, box-shadow .35s;
+}
+:root .xnav.is-scrolled .nav-pill { height: 56px; box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 18px 40px -26px rgba(0,0,0,.45); }
+
+/* over the photo hero: solid black bar */
+body.nav-dark .xnav .nav-pill { background: #0A0A0A; border-color: #262626; color: #FAFAFA; box-shadow: none; }
+body.nav-dark .xnav { --nav-fg: #FAFAFA; --nav-fg2: rgba(250,250,250,.66); --nav-line: #2A2A2A; }
+
+/* scroll progress lives on the bar itself */
+:root .xnav-progress { position: absolute; left: 28px; right: 28px; bottom: -1px; height: 2px; border-radius: 2px; pointer-events: none;
+  background: var(--nav-fg, var(--ink)); transform-origin: 0 50%; transform: scaleX(var(--k, 0)); opacity: 0; transition: opacity .3s; }
+:root .xnav.is-scrolled .xnav-progress { opacity: 1; }
+:root .rail-progress { display: none; }
+
+/* ---------- logo: the S draws itself on hover, wordmark tucks away on scroll ---------- */
+:root .xnav .nav-brand { gap: 8px; font-size: 1.22rem; }
+:root .xnav .brand-word { display: inline-block; max-width: 90px; overflow: hidden; white-space: nowrap; font-weight: 700; letter-spacing: -.035em;
+  transition: max-width .5s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+:root .xnav.is-scrolled .brand-word { max-width: 0; opacity: 0; }
+:root .xnav .nav-brand:hover .bm-s { stroke-dasharray: 46; animation: bm-draw .9s cubic-bezier(.6,0,.2,1); }
+@keyframes bm-draw { from { stroke-dashoffset: 46; } to { stroke-dashoffset: 0; } }
+:root .xnav .nav-brand:hover .brandmark { transform: rotate(-8deg); }
+:root .xnav .brandmark { transition: transform .5s cubic-bezier(.3,1.4,.4,1); }
+
+/* ---------- live city chip ---------- */
+:root .xnav .xcity { display: grid; align-content: center; gap: 1px; height: 46px; padding: 0 16px 0 14px; border-radius: 999px; text-align: left;
+  max-width: 250px; min-width: 0; border: 1px solid var(--nav-line, var(--rule)); transition: height .4s, background .2s, border-color .2s; }
+:root .xnav .xcity:hover { background: color-mix(in srgb, var(--nav-fg, var(--ink)) 5%, transparent); border-color: color-mix(in srgb, var(--nav-fg, var(--ink)) 30%, transparent); }
+.xcity-top { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: .9rem; line-height: 1.1; min-width: 0; }
+.xcity-dot { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--signal-go); flex: none; }
+.xcity-dot::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid var(--signal-go); opacity: 0; animation: xping 2.4s ease-out infinite; }
+@keyframes xping { 0% { transform: scale(.4); opacity: .9; } 80%, 100% { transform: scale(1.4); opacity: 0; } }
+.xcity-live { display: block; height: 15px; overflow: hidden; font-size: .72rem; line-height: 15px; color: var(--nav-fg2, var(--ink-3)); white-space: nowrap; text-overflow: ellipsis; max-width: 200px; padding-left: 14px;
+  transition: height .4s, opacity .3s; }
+.xcity-live b { color: var(--nav-fg, var(--ink)); font-weight: 600; font-size: .7rem; }
+.xcity-flip { display: block; overflow: hidden; text-overflow: ellipsis; animation: xflip .55s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes xflip { from { transform: translateY(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+:root .xnav.is-scrolled .xcity { height: 38px; }
+:root .xnav.is-scrolled .xcity-live { height: 0; opacity: 0; }
+
+/* ---------- rolling labels ---------- */
+.roll { position: relative; display: inline-block; overflow: hidden; vertical-align: top; line-height: 1.25; }
+.roll > span { display: inline-block; transition: transform .45s cubic-bezier(.6,0,.2,1); }
+.roll::after { content: attr(data-t); position: absolute; left: 0; top: 100%; transition: transform .45s cubic-bezier(.6,0,.2,1); white-space: nowrap; }
+a:hover > .roll > span, button:hover > .roll > span, a:focus-visible > .roll > span { transform: translateY(-100%); }
+a:hover > .roll::after, button:hover > .roll::after, a:focus-visible > .roll::after { transform: translateY(-100%); }
+
+:root .xnav .nav-links { gap: 0; }
+:root .xnav .nav-links a, :root .xnav .snav-more-btn { padding: 9px 15px; font-weight: 500; font-size: .9rem; border-radius: 999px; }
+:root .xnav .nav-slide { border-radius: 999px; background: color-mix(in srgb, var(--nav-fg, var(--ink)) 7%, transparent); box-shadow: none; }
+:root .xnav .nav-links a.has-chip { padding: 5px; }
+
+/* ---------- live ticket chip ---------- */
+.tkchip { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 11px 0 6px; border-radius: 999px;
+  background: var(--ink); color: var(--paper); font-size: .8rem; white-space: nowrap; animation: chip-in .5s cubic-bezier(.3,1.4,.4,1) both; }
+body.nav-dark .xnav .tkchip { background: #FAFAFA; color: #0A0A0A; }
+@keyframes chip-in { from { transform: scale(.7); opacity: 0; } }
+.tkchip b { font-size: .8rem; font-weight: 600; letter-spacing: .02em; }
+.tkchip-s { opacity: .7; }
+.tkchip-n { font-size: .68rem; padding: 1px 6px; border-radius: 99px; background: color-mix(in srgb, currentColor 18%, transparent); }
+.tk-ring { flex: none; transform: rotate(-90deg); }
+.tk-ring circle { fill: none; stroke: color-mix(in srgb, currentColor 25%, transparent); stroke-width: 2.4; }
+.tk-ring .tk-ring-v { stroke: currentColor; stroke-linecap: round; transition: stroke-dashoffset .8s; }
+.tkchip.ph-soon .tk-ring .tk-ring-v { stroke: var(--signal-wait); }
+.tkchip.ph-now { background: var(--signal-go); color: #fff; }
+.tkchip.ph-now .tk-ring .tk-ring-v { stroke: #fff; }
+.tkchip.ph-now { animation: chip-in .5s both, chip-beat 1.6s ease-in-out .5s infinite; }
+@keyframes chip-beat { 50% { transform: scale(1.05); } }
+
+/* ---------- mega menu ---------- */
+:root .xnav .xmega { width: 640px; left: 50%; transform: translateX(-50%); top: calc(100% + 18px); padding: 10px; border-radius: 20px;
+  display: grid; grid-template-columns: 1.35fr 1fr; gap: 10px; background: var(--card); color: var(--ink); border: 1px solid var(--rule);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.4); animation: xmega-in .35s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes xmega-in { from { opacity: 0; transform: translate(-50%, -8px); } }
+.xmega-list { display: grid; gap: 2px; }
+:root .xnav .xmega a.xmega-i { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 8px 10px; border-radius: 12px; box-shadow: none;
+  animation: xmega-item .4s cubic-bezier(.2,.8,.2,1) both; animation-delay: calc(var(--i) * 35ms); }
+@keyframes xmega-item { from { opacity: 0; transform: translateY(6px); } }
+:root .xnav .xmega a.xmega-i:hover, :root .xnav .xmega a.xmega-i.active { background: var(--paper-2); box-shadow: none; }
+.xmega-ico { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--paper-2); color: var(--ink); transition: background .2s, color .2s; }
+:root .xnav .xmega a.xmega-i:hover .xmega-ico { background: var(--ink); color: var(--paper); }
+.xmega-t b { display: flex; align-items: center; gap: 8px; font-size: .9rem; font-weight: 600; }
+.xmega-t > span { display: block; font-size: .76rem; color: var(--ink-3); line-height: 1.35; }
+.xmega-card { position: relative; display: block; border-radius: 14px; overflow: hidden; min-height: 280px; background: #0A0A0A; }
+.xmega-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.xmega-card:hover img { transform: scale(1.05); }
+.xmega-card-t { position: absolute; left: 10px; right: 10px; bottom: 10px; display: grid; gap: 3px; padding: 12px 14px; border-radius: 10px; background: #0A0A0A; color: #FAFAFA; }
+.xmega-card-t .mono { font-size: .6rem; letter-spacing: .14em; color: #A3A3A3; }
+.xmega-card-t b { font-size: 1.05rem; font-weight: 600; letter-spacing: -.02em; }
+.xmega-card-t > span:last-child { font-size: .78rem; color: #C7C7C7; }
+
+/* ---------- business button ---------- */
+:root .xnav .nav-biz { gap: 8px; padding: 0 18px; height: 42px; background: var(--ink); color: var(--paper); border-radius: 999px; }
+body.nav-dark .xnav .nav-biz { background: #FAFAFA; color: #0A0A0A; }
+:root .xnav .nav-biz i { transition: transform .35s cubic-bezier(.3,1.4,.4,1); }
+:root .xnav .nav-biz:hover i { transform: translateX(4px); }
+
+/* ---------- mobile ---------- */
+@media (max-width: 1180px) { :root .xnav .xcity { max-width: 200px; } .xcity-live { max-width: 160px; } }
+@media (max-width: 900px) {
+  .xdrawer-ticket { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0 4px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--nav-line); font-size: .85rem; }
+  .xd-ico { display: inline-grid; margin-right: 8px; opacity: .7; }
+  :root .xnav .nav-drawer a.snav-dchip { justify-content: flex-start; }
+}
+@media (min-width: 901px) { .xdrawer-ticket { display: none; } }
+@media (max-width: 560px) {
+  :root .xnav .nav-pill { height: 60px; padding: 0 8px 0 10px; }
+  :root .xnav .xcity { max-width: 170px; height: 42px; padding: 0 12px; }
+  .xcity-live { max-width: 140px; }
+  .xnav-progress { left: 18px; right: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .xcity-flip, .xcity-dot::after, .tkchip, .xmega, .xmega-i { animation: none !important; }
+  .roll > span, .roll::after { transition: none; }
+}
+
+/* the feature card is a link inside .nav-links — undo the pill-link styling */
+:root .xnav .xmega a.xmega-card { padding: 0; border-radius: 14px; color: #FAFAFA; font-weight: 400; }
+:root .xnav .xmega a.xmega-card:hover { color: #FAFAFA; }
+:root .xnav .xmega-card-t, :root .xnav .xmega-card-t span, :root .xnav .xmega-t > span { white-space: normal; }
+
+/* mobile drawer follows the bar: black over the photo hero */
+body.nav-dark .xnav .nav-drawer, body.nav-dark .xnav.is-open .nav-drawer { background: #0A0A0A; border-color: #262626; color: #FAFAFA; }
+:root .xnav .nav-drawer a.xdrawer-ticket { font-family: var(--f-body); font-size: .85rem; font-weight: 500; padding: 10px 12px; opacity: 1; transform: none; border: 1px solid var(--nav-line); }
+:root .xnav .nav-drawer a.xdrawer-ticket > span:last-child { opacity: .7; }

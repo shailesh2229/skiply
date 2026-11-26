@@ -13,10 +13,10 @@
 }
 
 .bp-staff-card {
-  background: white;
+  background: var(--d-tile);
   padding: 25px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--d-shadow, none);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -25,7 +25,7 @@
 
 .bp-staff-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--d-shadow, none);
 }
 
 .bp-staff-card.inactive {
@@ -81,23 +81,23 @@
 }
 
 .bp-role-badge.manager {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  background: var(--d-go-bg);
+  color: var(--d-go);
 }
 
 .bp-role-badge.handler {
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: var(--d-info-bg);
+  color: var(--d-info);
 }
 
 .bp-role-badge.viewer {
-  background: rgba(107, 114, 128, 0.1);
-  color: #6b7280;
+  background: var(--d-mute-bg);
+  color: var(--d-fg2);
 }
 
 .bp-dept-tag {
   padding: 6px 12px;
-  background: rgba(1, 22, 39, 0.1);
+  background: var(--d-sunk);
   color: var(--color-secondary);
   border-radius: 20px;
   font-size: 0.85rem;
@@ -110,7 +110,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 15px;
   padding: 15px;
-  background: #f9fafb;
+  background: var(--d-sunk);
   border-radius: 8px;
 }
 
@@ -145,13 +145,13 @@
 }
 
 .bp-status-indicator.active {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  background: var(--d-go-bg);
+  color: var(--d-go);
 }
 
 .bp-status-indicator.inactive {
-  background: rgba(107, 114, 128, 0.1);
-  color: #6b7280;
+  background: var(--d-mute-bg);
+  color: var(--d-fg2);
 }
 
 /* Staff Actions */
@@ -183,21 +183,21 @@
 }
 
 .bp-staff-btn.toggle {
-  background: #3b82f6;
+  background: var(--d-info);
   color: white;
 }
 
 .bp-staff-btn.toggle:hover {
-  background: #2563eb;
+  background: var(--d-info);
 }
 
 .bp-staff-btn.delete {
-  background: #ef4444;
+  background: var(--d-hot);
   color: white;
 }
 
 .bp-staff-btn.delete:hover {
-  background: #dc2626;
+  background: var(--d-hot);
 }
 
 /* Responsive */

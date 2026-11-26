@@ -11,8 +11,8 @@
   --ink-3: #847A6D;
   --rule: #CFC4B0;
   --rule-strong: #15120F;
-  --violet: #7C3AED;
-  --violet-neon: #A855F7;
+  --violet: var(--sign);
+  --violet-neon: var(--sign);
   --violet-ink: #5B21B6;
   --amber: #F2B233;
   --signal-go: #2E7D4F;
@@ -24,10 +24,10 @@
   --shadow: 0 1px 0 rgba(21,18,15,.08), 0 10px 30px -12px rgba(21,18,15,.25);
   --grain-opacity: .35;
 
-  --f-display: 'Fraunces', 'Times New Roman', serif;
-  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
-  --f-brand: 'Saira Stencil One', 'Arial Black', sans-serif;
+  --f-display: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-body: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+  --f-brand: 'Geist', system-ui, sans-serif;
 
   --wrap: 1240px;
   --gutter: clamp(16px, 4vw, 40px);
@@ -40,7 +40,7 @@
     --paper: #0F0E0D; --paper-2: #181614; --card: #1A1816;
     --ink: #F1E9D8; --ink-2: #C4B9A6; --ink-3: #8C8273;
     --rule: #34302A; --rule-strong: #F1E9D8;
-    --violet: #A78BFA; --violet-neon: #C084FC; --violet-ink: #DDD6FE;
+    --violet: var(--sign); --violet-neon: var(--sign); --violet-ink: #DDD6FE;
     --board: #070706; --board-cell: #141311;
     --shadow: 0 1px 0 rgba(0,0,0,.4), 0 14px 40px -14px rgba(0,0,0,.7);
     --grain-opacity: .12;
@@ -51,7 +51,7 @@
   --paper: #0F0E0D; --paper-2: #181614; --card: #1A1816;
   --ink: #F1E9D8; --ink-2: #C4B9A6; --ink-3: #8C8273;
   --rule: #34302A; --rule-strong: #F1E9D8;
-  --violet: #A78BFA; --violet-neon: #C084FC; --violet-ink: #DDD6FE;
+  --violet: var(--sign); --violet-neon: var(--sign); --violet-ink: #DDD6FE;
   --board: #070706; --board-cell: #141311;
   --shadow: 0 1px 0 rgba(0,0,0,.4), 0 14px 40px -14px rgba(0,0,0,.7);
   --grain-opacity: .12;
@@ -114,7 +114,7 @@ button { cursor: pointer; background: none; border: 0; }
 }
 .btn:active { transform: translateY(1px) scale(.99); }
 .btn-ink { background: var(--ink); color: var(--paper); }
-.btn-ink:hover { background: var(--violet); border-color: var(--violet); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--violet) 20%, transparent); }
+.btn-ink:hover { background: var(--violet); border-color: var(--violet); color: #fff; box-shadow: var(--violet) 20%, transparent); }
 .btn-line { background: transparent; color: var(--ink); }
 .btn-line:hover { background: var(--ink); color: var(--paper); }
 .btn-ghost { border-color: transparent; padding: 0 .6em; }

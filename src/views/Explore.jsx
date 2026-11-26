@@ -54,7 +54,7 @@ export default function Explore() {
       <div className="wrap">
         <header className="explore-head">
           <div>
-            <p className="kicker">Departures · within 3 km of {location.name}</p>
+            <p className="kicker">Within 3 km of {location.name}</p>
             <h1 className="h1">{cat ? CATEGORIES[cat].label : 'Every queue'} <em className="muted">near you</em></h1>
           </div>
           <div className="explore-search">
@@ -63,7 +63,7 @@ export default function Explore() {
         </header>
 
         <div className="filters" role="toolbar" aria-label="Filters">
-          <button className="chip" aria-pressed={!cat} onClick={() => set('cat', '')}>All platforms</button>
+          <button className="chip" aria-pressed={!cat} onClick={() => set('cat', '')}>All places</button>
           {CATEGORY_LIST.map((c) => (
             <button key={c.key} className="chip" aria-pressed={cat === c.key} onClick={() => set('cat', cat === c.key ? '' : c.key)}>
               <Emblem category={c.key} size={15} /> {c.label}

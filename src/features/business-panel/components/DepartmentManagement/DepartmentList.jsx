@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../Shared/Header';
+import Glyph from '../Shared/Glyph';
 import Button from '../../../../components/Common/Button';
 import '../../styles/Departments.css';
 
@@ -69,7 +70,7 @@ const DepartmentList = () => {
         subtitle="Manage your business departments and their settings"
         actions={
           <Button variant="primary" onClick={handleAddDepartment}>
-            ➕ Add Department
+            <Glyph e="➕" /> Add Department
           </Button>
         }
       />
@@ -80,7 +81,7 @@ const DepartmentList = () => {
             <div className="bp-dept-header">
               <h3>{dept.name}</h3>
               <span className={`bp-dept-status-badge ${dept.status}`}>
-                {dept.status === 'active' ? '🟢 Active' : '⏸️ Paused'}
+                {dept.status === 'active' ? <><Glyph e="🟢" /> Active</> : <><Glyph e="⏸️" /> Paused</>}
               </span>
             </div>
 
@@ -104,7 +105,7 @@ const DepartmentList = () => {
             </div>
 
             <div className="bp-dept-info">
-              <p>⏰ {dept.workingHours}</p>
+              <p><Glyph e="⏰" /> {dept.workingHours}</p>
             </div>
 
             <div className="bp-dept-actions">
@@ -112,19 +113,19 @@ const DepartmentList = () => {
                 className="bp-dept-btn edit" 
                 onClick={() => handleEditDepartment(dept)}
               >
-                ✏️ Edit
+                <Glyph e="✏️" /> Edit
               </button>
               <button 
                 className="bp-dept-btn toggle"
                 onClick={() => toggleDepartmentStatus(dept.id)}
               >
-                {dept.status === 'active' ? '⏸️ Pause' : '▶️ Start'}
+                {dept.status === 'active' ? <><Glyph e="⏸️" /> Pause</> : <><Glyph e="▶️" /> Start</>}
               </button>
               <button 
                 className="bp-dept-btn delete" 
                 onClick={() => handleDeleteDepartment(dept.id)}
               >
-                🗑️ Delete
+                <Glyph e="🗑️" /> Delete
               </button>
             </div>
           </div>

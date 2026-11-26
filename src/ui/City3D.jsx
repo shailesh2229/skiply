@@ -9,27 +9,27 @@ import { estimateAt, fmtWait } from '../lib/estimate';
 const STYLE = {
   version: 8,
   sources: { omt: { type: 'vector', url: 'https://tiles.openfreemap.org/planet', attribution: '© OpenMapTiles · © OpenStreetMap contributors' } },
-  sky: { 'sky-color': '#0A0812', 'horizon-color': '#3B1D6E', 'fog-color': '#08070B', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.7, 'fog-ground-blend': 0.35, 'atmosphere-blend': 0 },
-  light: { anchor: 'map', color: '#C7B8FF', intensity: 0.45, position: [1.3, 210, 40] },
+  sky: { 'sky-color': '#060605', 'horizon-color': '#1A1712', 'fog-color': '#0E0E0C', 'sky-horizon-blend': 0.55, 'horizon-fog-blend': 0.7, 'fog-ground-blend': 0.4, 'atmosphere-blend': 0 },
+  light: { anchor: 'map', color: '#FFE3B0', intensity: 0.42, position: [1.3, 210, 40] },
   layers: [
-    { id: 'bg', type: 'background', paint: { 'background-color': '#08070B' } },
-    { id: 'park', type: 'fill', source: 'omt', 'source-layer': 'park', paint: { 'fill-color': '#0B120E', 'fill-opacity': 0.9 } },
-    { id: 'green', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: ['in', ['get', 'class'], ['literal', ['grass', 'wood', 'forest']]], paint: { 'fill-color': '#0A100C' } },
-    { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#0F0A24' } },
-    { id: 'water-edge', type: 'line', source: 'omt', 'source-layer': 'water', paint: { 'line-color': '#4C2A9A', 'line-width': 0.8, 'line-opacity': 0.55 } },
-    { id: 'rail', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'rail'], paint: { 'line-color': '#5B4E8C', 'line-width': 1, 'line-dasharray': [2, 2], 'line-opacity': 0.6 } },
+    { id: 'bg', type: 'background', paint: { 'background-color': '#0E0E0C' } },
+    { id: 'park', type: 'fill', source: 'omt', 'source-layer': 'park', paint: { 'fill-color': '#101611', 'fill-opacity': 0.95 } },
+    { id: 'green', type: 'fill', source: 'omt', 'source-layer': 'landcover', filter: ['in', ['get', 'class'], ['literal', ['grass', 'wood', 'forest']]], paint: { 'fill-color': '#0F150F' } },
+    { id: 'water', type: 'fill', source: 'omt', 'source-layer': 'water', paint: { 'fill-color': '#0D1619' } },
+    { id: 'water-edge', type: 'line', source: 'omt', 'source-layer': 'water', paint: { 'line-color': '#2C4650', 'line-width': 0.8, 'line-opacity': 0.7 } },
+    { id: 'rail', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: ['==', ['get', 'class'], 'rail'], paint: { 'line-color': '#4A463D', 'line-width': 1.1, 'line-dasharray': [2, 2], 'line-opacity': 0.9 } },
     { id: 'roads-minor', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: ['in', ['get', 'class'], ['literal', ['minor', 'service', 'tertiary']]],
-      paint: { 'line-color': '#3A3128', 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.3, 16, 2.2] } },
+      paint: { 'line-color': '#2F2C27', 'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.4, 16, 2.4] } },
     { id: 'roads-glow', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: ['in', ['get', 'class'], ['literal', ['motorway', 'trunk', 'primary', 'secondary']]],
-      paint: { 'line-color': '#F2B233', 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 2, 16, 14], 'line-blur': 8, 'line-opacity': 0.22 } },
+      paint: { 'line-color': '#E8A33D', 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 3, 16, 18], 'line-blur': 10, 'line-opacity': 0.16 } },
     { id: 'roads-major', type: 'line', source: 'omt', 'source-layer': 'transportation', filter: ['in', ['get', 'class'], ['literal', ['motorway', 'trunk', 'primary', 'secondary']]],
-      paint: { 'line-color': '#F6C969', 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.6, 16, 3], 'line-opacity': 0.75 } },
+      paint: { 'line-color': '#E8A33D', 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.7, 16, 3.2], 'line-opacity': 0.85 } },
     { id: 'buildings', type: 'fill-extrusion', source: 'omt', 'source-layer': 'building', minzoom: 13,
       paint: {
-        'fill-extrusion-color': ['interpolate', ['linear'], ['coalesce', ['get', 'render_height'], 8], 0, '#211C30', 25, '#2E2746', 80, '#46386E', 200, '#6A52B8'],
+        'fill-extrusion-color': ['interpolate', ['linear'], ['coalesce', ['get', 'render_height'], 8], 0, '#1D1C1A', 25, '#2B2925', 80, '#3A362F', 200, '#4E483D'],
         'fill-extrusion-height': ['interpolate', ['linear'], ['zoom'], 13, 0, 14.2, ['coalesce', ['get', 'render_height'], 8]],
         'fill-extrusion-base': ['coalesce', ['get', 'render_min_height'], 0],
-        'fill-extrusion-opacity': 0.92,
+        'fill-extrusion-opacity': 0.94,
         'fill-extrusion-vertical-gradient': true,
       } },
   ],
@@ -50,7 +50,7 @@ function venueData(places, now) {
   places.forEach((p) => {
     const e = estimateAt(p, d);
     const closed = e.status.open === false;
-    const props = { id: p.id, cat: p.category, color: closed ? '#3A3542' : CATEGORIES[p.category].neon, h: closed ? 14 : 70 + e.wait * 16, name: p.name, wait: closed ? 'Closed' : fmtWait(e.wait), people: e.people };
+    const props = { id: p.id, cat: p.category, color: closed ? '#3A3731' : CATEGORIES[p.category].neon, h: closed ? 14 : 70 + e.wait * 16, name: p.name, wait: closed ? 'Closed' : fmtWait(e.wait), people: e.people };
     cols.push({ type: 'Feature', properties: props, geometry: { type: 'Polygon', coordinates: circle(p.lng, p.lat) } });
     pts.push({ type: 'Feature', properties: props, geometry: { type: 'Point', coordinates: [p.lng, p.lat] } });
   });
@@ -149,8 +149,8 @@ export default function City3D({ places, now, shot, onSelect, onReady }) {
       orbiting.current = true;
       m.flyTo({ center: [shot.center.lng, shot.center.lat], zoom: shot.zoom, pitch: shot.pitch, bearing: shot.bearing, duration: 2600, curve: 1.3, essential: true });
       const color = shot.focusId
-        ? ['case', ['==', ['get', 'id'], shot.focusId], '#FFFFFF', ['get', 'color']]
-        : shot.focusCat ? ['case', ['==', ['get', 'cat'], shot.focusCat], ['get', 'color'], '#2A2631'] : ['get', 'color'];
+        ? ['case', ['==', ['get', 'id'], shot.focusId], '#F2C200', ['get', 'color']]
+        : shot.focusCat ? ['case', ['==', ['get', 'cat'], shot.focusCat], ['get', 'color'], '#2A2823'] : ['get', 'color'];
       m.setPaintProperty('venue-cols', 'fill-extrusion-color', color);
       m.setFilter('venue-pulse', shot.focusId ? ['==', ['get', 'id'], shot.focusId] : shot.focusCat ? ['==', ['get', 'cat'], shot.focusCat] : ['==', ['get', 'id'], shot.pulseId || '__none__']);
       m.setPaintProperty('venue-halo', 'circle-opacity', shot.focusCat ? ['case', ['==', ['get', 'cat'], shot.focusCat], 0.9, 0.05] : 0.75);
